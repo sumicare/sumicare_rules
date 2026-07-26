@@ -1,0 +1,16 @@
+{
+	"$schema": "https://turbo.build/schema.json",
+	"concurrency": "100%",
+	"tasks": {
+		"build": {
+			"dependsOn": ["^build"],
+			"inputs": ["$TURBO_DEFAULT$", "!**/*.md"],
+			"env": ["TERRAFORM_BINARY_NAME", "CDKTF_PARALLELISM"],
+			"outputs": ["dist/**"]
+		},
+		"watch": {
+			"cache": false,
+			"persistent": true
+		}
+	}
+}

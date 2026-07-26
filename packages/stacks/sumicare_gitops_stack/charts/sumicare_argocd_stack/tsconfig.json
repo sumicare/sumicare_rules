@@ -1,0 +1,11 @@
+{
+	"extends": "../../../../../tsconfig.json",
+	"include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.mts"],
+	"compilerOptions": {
+		"rootDir": ".",
+		"paths": {
+			"GitOps/ArgoCD/*": ["./src/*"],
+			"GitOps/ArgoCD/Test/*": ["./test/*"]
+		}
+	}
+}

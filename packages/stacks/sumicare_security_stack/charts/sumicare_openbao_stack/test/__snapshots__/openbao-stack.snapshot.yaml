@@ -1,0 +1,350 @@
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-agent-injector-clusterrole
+  rules:
+    - apiGroups:
+        - admissionregistration.k8s.io
+      resourceNames: []
+      resources:
+        - mutatingwebhookconfigurations
+      verbs:
+        - get
+        - list
+        - watch
+        - patch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - nodes
+      verbs:
+        - get
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/component: csi
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-csi-provider-clusterrole
+  rules:
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - serviceaccounts/token
+      verbs:
+        - create
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-agent-injector-clusterrole
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: openbao-agent-injector-clusterrole
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: openbao-injector
+      namespace: openbao
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: csi
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-csi-provider-clusterrole
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: openbao-csi-provider-clusterrole
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: openbao-csi
+      namespace: openbao
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-server-auth-delegator
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:auth-delegator
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: openbao-server
+      namespace: openbao
+- apiVersion: policy/v1
+  kind: PodDisruptionBudget
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-injector
+    namespace: openbao
+  spec:
+    minAvailable: 1
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: injector
+        app.kubernetes.io/name: openbao
+- apiVersion: policy/v1
+  kind: PodDisruptionBudget
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-server
+    namespace: openbao
+  spec:
+    minAvailable: 1
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: server
+        app.kubernetes.io/name: openbao
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-agent-injector-leader-elector
+    namespace: openbao
+  rules:
+    - apiGroups:
+        - ""
+      resources:
+        - secrets
+      verbs:
+        - create
+        - get
+        - watch
+        - list
+        - update
+    - apiGroups:
+        - ""
+      resources:
+        - configmaps
+      verbs:
+        - create
+        - get
+        - watch
+        - list
+        - update
+    - apiGroups:
+        - ""
+      resources:
+        - pods
+      verbs:
+        - get
+        - patch
+        - delete
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    labels:
+      app.kubernetes.io/component: csi
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-csi-provider-role
+    namespace: openbao
+  rules:
+    - apiGroups:
+        - ""
+      resources:
+        - secrets
+      verbs:
+        - create
+    - apiGroups:
+        - ""
+      resourceNames:
+        - openbao-csi-provider-hmac-key
+      resources:
+        - secrets
+      verbs:
+        - get
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-server-discovery
+    namespace: openbao
+  rules:
+    - apiGroups:
+        - ""
+      resources:
+        - pods
+      verbs:
+        - get
+        - watch
+        - list
+        - update
+        - patch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-agent-injector-leader-elector
+    namespace: openbao
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: openbao-agent-injector-leader-elector
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: openbao-injector
+      namespace: openbao
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: csi
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-csi-provider-role
+    namespace: openbao
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: openbao-csi-provider-role
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: openbao-csi
+      namespace: openbao
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-server-discovery
+    namespace: openbao
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: openbao-server-discovery
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: openbao-server
+      namespace: openbao
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: csi
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-csi
+    namespace: openbao
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-injector
+    namespace: openbao
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-server
+    namespace: openbao
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: snapshot
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 0.28.6
+    name: openbao-snapshot
+    namespace: openbao

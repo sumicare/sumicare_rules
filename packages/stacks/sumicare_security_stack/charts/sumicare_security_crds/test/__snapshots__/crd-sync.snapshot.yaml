@@ -1,0 +1,66 @@
+crd-falco-components.yaml:
+  hash: 712b44b21ce6d2cbf23ed8824ace7b114283534739fa86ec6a049fa74db0188c
+  commitHash: 1eecad58725b003586b21a0ae3fb5a10bb236c49
+crd-falco-configs.yaml:
+  hash: 18a5a2add1b3d1a2c175aafca7c047a5db77d4a1c57522da00a2355107a7325b
+  commitHash: e5efb1310676003e324996aef9ab504de7ffae99
+crd-falco-falcos.yaml:
+  hash: fde6a1c7ef3d98a6132d12df72cac11c881ffb75f16c0ac987750f1cf242243f
+  commitHash: 1eecad58725b003586b21a0ae3fb5a10bb236c49
+crd-falco-plugins.yaml:
+  hash: 76ee06ae5c0019d8a79c8b045feda9af56bbf9d843a03d9f99337bc5d90cb78d
+  commitHash: e5efb1310676003e324996aef9ab504de7ffae99
+crd-falco-rulesfiles.yaml:
+  hash: ca6b651d06d398c5d66b2fced0583eda3f4f5aa4acefde73509cf10cb235f7fe
+  commitHash: e5efb1310676003e324996aef9ab504de7ffae99
+crd-kubearmor-configs.yaml:
+  hash: 5bbfba950e3a7803279fad25219ef1c43a3984ed4f7fa173582ea023b486d60c
+  commitHash: ec502a2743babc9a3a1e37d9ce01e7b1d7f0512d
+crd-kubearmor-csp.yaml:
+  hash: 04245cc1f4703ccc715e7b572359e10811cf04c01931e9c0ec8f192e2b6a364a
+  commitHash: 536a827491005f4c502998dd979fc4d34511aa8a
+crd-kubearmor-hsp.yaml:
+  hash: f0696053b15da437330415e694093a120e514738e2a498bf614cb1aebdd1d923
+  commitHash: 7ab1553dda6240a5632bee47ab0ce47e1d65599e
+crd-kubearmor-ksp.yaml:
+  hash: 8670bf6ff60912a50ed214c6039fef3be85165d79b1f4c29fcecb9808620bac5
+  commitHash: 536a827491005f4c502998dd979fc4d34511aa8a
+crd-kubearmor-nsp.yaml:
+  hash: 96838bfb1ca8140c2c0a9259e2332f6a99bb43b037e3c29cd5a8e950b7a90c9c
+  commitHash: 1e9032e67f4357ebbdc6a53d08ff294534aff9ba
+crd-kyverno-cleanuppolicies.yaml:
+  hash: ab36fb413d63ebc2ed905d53fb13d3ccf8a1a6129852fc790e8cd757fe723c64
+  commitHash: 2d9fc02c7513758cc660f9be867be17495042cd5
+crd-kyverno-clustercleanuppolicies.yaml:
+  hash: f46e038f405dacc9560993a764ea1999db77af28893cf251630eb1e892b7f990
+  commitHash: 2d9fc02c7513758cc660f9be867be17495042cd5
+crd-kyverno-clusterephemeralreports.yaml:
+  hash: e2713fb635313f2f32c32a96010da2f4d0d2d5cbb58e46d19f501ce44c8f7653
+  commitHash: 9ba0be66e5e574eb92a82a6c9abc39300ca2179a
+crd-kyverno-clusterpolicies.yaml:
+  hash: 85eb379619122a3a5a45be84e96a1c84dc49c0b895bae516c5eb63c2023dd4b4
+  commitHash: 8e53789ec8aea903a2df9a1f1ccb796e301221f4
+crd-kyverno-clusterpolicyreports.yaml:
+  hash: 0b545bd21952edd4208e22e75f00d185e9a329664024810f2937e7b0ae36170c
+  commitHash: 9ba0be66e5e574eb92a82a6c9abc39300ca2179a
+crd-kyverno-ephemeralreports.yaml:
+  hash: 6c30a32e12a632a19259a20623e11b90b17db8a74c3142fdc57ddfc13e5f0fe2
+  commitHash: 9ba0be66e5e574eb92a82a6c9abc39300ca2179a
+crd-kyverno-globalcontextentries.yaml:
+  hash: 9a68871a7c401bbefaa3fcad547dd28dd1f3fff61789d852ae819ab85c994bec
+  commitHash: 9ba0be66e5e574eb92a82a6c9abc39300ca2179a
+crd-kyverno-policies.yaml:
+  hash: 9877dcf7d526d57259e183b57c656416857a9c56530c7b37ab7764e7b2ff2c4d
+  commitHash: 8e53789ec8aea903a2df9a1f1ccb796e301221f4
+crd-kyverno-policyexceptions.yaml:
+  hash: 3adef20c1283ccecf8a1367c57696f5e4bd637d6d703a79099e8c8276831b905
+  commitHash: 9ba0be66e5e574eb92a82a6c9abc39300ca2179a
+crd-kyverno-policyreports.yaml:
+  hash: c525903ce4e309f1102b308de6863aa848384d0b9cd5acd6ab59bd58febf6ddd
+  commitHash: 9ba0be66e5e574eb92a82a6c9abc39300ca2179a
+crd-kyverno-updaterequests.yaml:
+  hash: bb15d4dccb890111263664426e48f67232c81a353acf7e99282e6640466f580c
+  commitHash: 57254ed7f0f955e240ed7197f07c645b91c6d573
+crd-secrets-store-csi-secretproviderclasses.yaml:
+  hash: 5b25cc3fbd8dce30ac8d20adb0789ef9d51207b63ba6a2b68ad5f624fc8b7669
+  commitHash: 5c75e89f06619ddd18f0d42d779a57efad5a72c7

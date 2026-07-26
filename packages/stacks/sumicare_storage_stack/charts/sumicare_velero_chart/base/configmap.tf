@@ -1,0 +1,24 @@
+resource "kubernetes_manifest" "configmap_velero_velero_repo_maintenance" {
+  manifest = {
+    "apiVersion" = "v1"
+    "data" = {
+      "global" = <<-EOT
+      {
+        "keepLatestMaintenanceJobs": 3
+      }
+      
+      EOT
+    }
+    "kind" = "ConfigMap"
+    "metadata" = {
+      "labels" = {
+        "app.kubernetes.io/instance" = "velero"
+        "app.kubernetes.io/managed-by" = "Helm"
+        "app.kubernetes.io/name" = "velero"
+        "helm.sh/chart" = "velero-11.4.0"
+      }
+      "name" = "velero-repo-maintenance"
+      "namespace" = "velero"
+    }
+  }
+}

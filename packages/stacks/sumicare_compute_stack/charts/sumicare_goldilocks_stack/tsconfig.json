@@ -1,0 +1,12 @@
+{
+	"extends": "../../../../../tsconfig.json",
+	"include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.mts"],
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": ["node"],
+		"paths": {
+			"Goldilocks/Stack/*": ["./src/*"],
+			"Goldilocks/Stack/Test/*": ["./test/*"]
+		}
+	}
+}

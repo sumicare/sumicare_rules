@@ -1,0 +1,51 @@
+crd-argocd-application.yaml:
+  hash: b2a5507463f9a5780332ab87fbf6d13368590744b7c82ac74e5c7df6837a537c
+  commitHash: bbf4c12c8cab91c631ea46e203ba71763299c5f2
+crd-argocd-applicationset.yaml:
+  hash: eb47d83589f9f117e5543a25c2454e9b0aa45bef4b3be946ed752ef4f07fab2f
+  commitHash: bbf4c12c8cab91c631ea46e203ba71763299c5f2
+crd-argocd-appproject.yaml:
+  hash: c0bb3ce6d551518656f1b47d922622b156643a3e9db37073aaca7f2842657d01
+  commitHash: a8cc0d1ab7e3c151190df45ba784313426b27bbe
+crd-argoevents-eventbus.yaml:
+  hash: 61131da4ec659e6ce294b4c695bf4d11cd20ee8c1a6ebaeee1a5b1a005a7b9d5
+  commitHash: d2c2055290f30e645e38d0c6b4e7aaa5236442de
+crd-argoevents-eventsources.yaml:
+  hash: c4848bdb3a0c24e8888e0af16b13c739861576d6c096ed061d96aba61c3c4e36
+  commitHash: 192e33273dd47f7d8f3f4016f4a23b80f3485598
+crd-argoevents-sensors.yaml:
+  hash: 20fa64af5124174c113f49627fd18c97cbd5cfd0f717b8bdf6957ba6cfdcd9bf
+  commitHash: 192e33273dd47f7d8f3f4016f4a23b80f3485598
+crd-argorollouts-analysisrun.yaml:
+  hash: 7c83e25fd0619d0e5a9aac34f4939a60f2131dd390a343fcbd73b1006e715bb9
+  commitHash: 3b1375a83523015f635c778eedcc93a7f8388f54
+crd-argorollouts-analysistemplate.yaml:
+  hash: 20db61ec09bfb6c3d15055f96e11fabc58f0bf8032ac798da8ad52c7cdb5f0a5
+  commitHash: 3b1375a83523015f635c778eedcc93a7f8388f54
+crd-argorollouts-clusteranalysistemplate.yaml:
+  hash: 624fc43d1b64ed08278c63214fb9400610c48b34e24aa730d467545aab443ccb
+  commitHash: 3b1375a83523015f635c778eedcc93a7f8388f54
+crd-argorollouts-experiment.yaml:
+  hash: 6de54384b4330ade15327a9f80ff7550ea624123b538ddec49e87744ec1728a1
+  commitHash: 3b1375a83523015f635c778eedcc93a7f8388f54
+crd-argorollouts-rollout.yaml:
+  hash: 7b71f629e0407013165ba84984af3ed4c36a424535bd118bc11e02969f510a57
+  commitHash: 3b1375a83523015f635c778eedcc93a7f8388f54
+crd-argoworkflows-clusterworkflowtemplates.yaml:
+  hash: 44bf94f43f44884091078ab9e485b9a621fa38f4b2bc0b71759f3df53b49c4ff
+  commitHash: 80583c5b9c2ff5d127c8abb26130331eeb87cff9
+crd-argoworkflows-cronworkflows.yaml:
+  hash: a7afebad42a486e4612687822b9dc00c3d719864bcac4f19260d5b57a1711c5d
+  commitHash: 80583c5b9c2ff5d127c8abb26130331eeb87cff9
+crd-argoworkflows-workfloweventbindings.yaml:
+  hash: d0eb7aae890c90f1ae2d652f69adc75763997a535e022eba03ef5302cea03d03
+  commitHash: 80583c5b9c2ff5d127c8abb26130331eeb87cff9
+crd-argoworkflows-workflows.yaml:
+  hash: 66948e1d12600c34eae385e2838d550fffb77f8fd06c74808083e1f56110e2b4
+  commitHash: 80583c5b9c2ff5d127c8abb26130331eeb87cff9
+crd-argoworkflows-workflowtaskresults.yaml:
+  hash: 496b2c78cd9aef714385037e11f219760b5f4bb9f9b22634c43eae25ed181995
+  commitHash: 80583c5b9c2ff5d127c8abb26130331eeb87cff9
+crd-argoworkflows-workflowtemplates.yaml:
+  hash: 78ab21282c77a8f751e6dbb4f403e632432ade4735c48bf828137accf7b00a7d
+  commitHash: 80583c5b9c2ff5d127c8abb26130331eeb87cff9

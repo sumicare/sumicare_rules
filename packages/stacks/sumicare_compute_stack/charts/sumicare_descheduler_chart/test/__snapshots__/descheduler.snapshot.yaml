@@ -1,0 +1,455 @@
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/part-of: descheduler
+      app.kubernetes.io/version: 0.36.0
+    name: descheduler
+  rules:
+    - apiGroups:
+        - events.k8s.io
+      resourceNames: []
+      resources:
+        - events
+      verbs:
+        - create
+        - update
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - nodes
+      verbs:
+        - get
+        - watch
+        - list
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - namespaces
+      verbs:
+        - get
+        - watch
+        - list
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - pods
+      verbs:
+        - get
+        - watch
+        - list
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - pods/eviction
+      verbs:
+        - create
+    - apiGroups:
+        - scheduling.k8s.io
+      resourceNames: []
+      resources:
+        - priorityclasses
+      verbs:
+        - get
+        - watch
+        - list
+    - apiGroups:
+        - policy
+      resourceNames: []
+      resources:
+        - poddisruptionbudgets
+      verbs:
+        - get
+        - watch
+        - list
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - persistentvolumeclaims
+      verbs:
+        - get
+        - watch
+        - list
+    - apiGroups:
+        - coordination.k8s.io
+      resourceNames: []
+      resources:
+        - leases
+      verbs:
+        - create
+        - update
+    - apiGroups:
+        - coordination.k8s.io
+      resourceNames:
+        - descheduler
+      resources:
+        - leases
+      verbs:
+        - get
+        - patch
+        - delete
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/part-of: descheduler
+      app.kubernetes.io/version: 0.36.0
+    name: descheduler
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: descheduler
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: descheduler
+      namespace: kube-system
+- apiVersion: v1
+  data:
+    policy.yaml: |
+      apiVersion: descheduler/v1alpha2
+      kind: DeschedulerPolicy
+      maxNoOfPodsToEvictPerNode: 10
+      evictionFailureEventNotification: false
+      profiles:
+        - name: default
+          pluginConfig:
+            - name: DefaultEvictor
+              args:
+                podProtections:
+                  defaultDisabled:
+                    - PodsWithLocalStorage
+                  extraEnabled:
+                    - PodsWithPVC
+            - name: RemoveDuplicates
+            - name: RemovePodsHavingTooManyRestarts
+              args:
+                includingInitContainers: true
+                podRestartThreshold: 100
+            - name: RemovePodsViolatingNodeAffinity
+              args:
+                nodeAffinityType:
+                  - requiredDuringSchedulingIgnoredDuringExecution
+            - name: RemovePodsViolatingNodeTaints
+            - name: RemovePodsViolatingInterPodAntiAffinity
+            - name: RemovePodsViolatingTopologySpreadConstraint
+            - name: LowNodeUtilization
+              args:
+                targetThresholds:
+                  cpu: 50
+                  memory: 50
+                  pods: 50
+                thresholds:
+                  cpu: 20
+                  memory: 20
+                  pods: 20
+          plugins:
+            balance:
+              enabled:
+                - RemoveDuplicates
+                - RemovePodsViolatingTopologySpreadConstraint
+                - LowNodeUtilization
+            deschedule:
+              enabled:
+                - RemovePodsHavingTooManyRestarts
+                - RemovePodsViolatingNodeTaints
+                - RemovePodsViolatingNodeAffinity
+                - RemovePodsViolatingInterPodAntiAffinity
+  immutable: false
+  kind: ConfigMap
+  metadata:
+    labels:
+      app.kubernetes.io/component: descheduler
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/part-of: descheduler
+      app.kubernetes.io/version: 0.36.0
+    name: descheduler
+    namespace: kube-system
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/part-of: descheduler
+      app.kubernetes.io/version: 0.36.0
+    name: descheduler
+    namespace: kube-system
+  spec:
+    minReadySeconds: 0
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: descheduler-deployment-c8c851f5
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        annotations:
+          checksum/config: descheduler
+        labels:
+          app.kubernetes.io/instance: descheduler
+          app.kubernetes.io/name: descheduler
+          cdk8s.io/metadata.addr: descheduler-deployment-c8c851f5
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: descheduler-deployment-c8c851f5
+                  namespaces:
+                    - kube-system
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: descheduler-deployment-c8c851f5
+                  namespaces:
+                    - kube-system
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: true
+        containers:
+          - args:
+              - --policy-config-file=/policy-dir/policy.yaml
+              - --descheduling-interval=2m
+              - --v=3
+              - --leader-elect=true
+              - --leader-elect-lease-duration=15s
+              - --leader-elect-renew-deadline=10s
+              - --leader-elect-retry-period=2s
+              - --leader-elect-resource-lock=leases
+              - --leader-elect-resource-name=descheduler
+              - --leader-elect-resource-namespace=kube-system
+              - --enable-http2=true
+              - --otel-collector-endpoint=http://otel-collector.observability.svc.cluster.local:4317
+              - --otel-service-name=descheduler
+              - --otel-trace-namespace=kube-system
+              - --otel-sample-rate=0.1
+              - --otel-fallback-no-op-on-error=true
+            command:
+              - /bin/descheduler
+            image: registry.k8s.io/descheduler/descheduler:v0.36.0
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /healthz
+                port: 10258
+                scheme: HTTPS
+              initialDelaySeconds: 30
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: descheduler
+            ports:
+              - containerPort: 10258
+                name: https-metrics
+                protocol: TCP
+            resources:
+              limits:
+                cpu: 400m
+                memory: 1024Mi
+              requests:
+                cpu: 200m
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            volumeMounts:
+              - mountPath: /policy-dir
+                name: policy-volume
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        priorityClassName: system-cluster-critical
+        restartPolicy: Always
+        securityContext:
+          fsGroup: 1001
+          fsGroupChangePolicy: Always
+          runAsGroup: 1001
+          runAsNonRoot: true
+          runAsUser: 1001
+        serviceAccountName: descheduler
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/instance: descheduler
+                app.kubernetes.io/name: descheduler
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/instance: descheduler
+                app.kubernetes.io/name: descheduler
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+        volumes:
+          - configMap:
+              name: descheduler
+            name: policy-volume
+- apiVersion: policy/v1
+  kind: PodDisruptionBudget
+  metadata:
+    labels:
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/part-of: descheduler
+      app.kubernetes.io/version: 0.36.0
+    name: descheduler
+    namespace: kube-system
+  spec:
+    minAvailable: 1
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: descheduler
+        app.kubernetes.io/name: descheduler
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/part-of: descheduler
+      app.kubernetes.io/version: 0.36.0
+    name: descheduler
+    namespace: kube-system
+  spec:
+    clusterIP: None
+    externalIPs: []
+    ipFamilies:
+      - IPv4
+      - IPv6
+    ipFamilyPolicy: PreferDualStack
+    ports:
+      - name: https-metrics
+        port: 10258
+        protocol: TCP
+        targetPort: 10258
+    selector:
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/name: descheduler
+    type: ClusterIP
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: descheduler
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/part-of: descheduler
+      app.kubernetes.io/version: 0.36.0
+    name: descheduler
+    namespace: kube-system
+- apiVersion: monitoring.coreos.com/v1
+  kind: ServiceMonitor
+  metadata:
+    labels:
+      app.kubernetes.io/instance: descheduler
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: descheduler
+      app.kubernetes.io/part-of: descheduler
+      app.kubernetes.io/version: 0.36.0
+    name: descheduler-servicemonitor
+    namespace: kube-system
+  spec:
+    endpoints:
+      - honorLabels: true
+        interval: 30s
+        metricRelabelings:
+          - action: keep
+            regex: descheduler|scheduler_|process_|go_|otel
+            sourceLabels:
+              - __name__
+        port: metrics
+        relabelings:
+          - action: replace
+            regex: ^(.*)$
+            replacement: $1
+            separator: ;
+            sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: nodename
+          - action: replace
+            replacement: descheduler
+            targetLabel: otel_service_name
+          - action: replace
+            replacement: kube-system
+            targetLabel: otel_service_namespace
+        scheme: https
+    jobLabel: jobLabel
+    namespaceSelector:
+      matchNames:
+        - kube-system
+    selector:
+      matchLabels:
+        app.kubernetes.io/instance: descheduler
+        app.kubernetes.io/name: descheduler
+    targetLabels:
+      - otel.service.name/descheduler
+      - otel.service.namespace/kube-system

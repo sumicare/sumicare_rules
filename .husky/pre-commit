@@ -1,0 +1,8 @@
+pnpm fix:node:deps
+pnpm fix:node:sync
+pnpm fix:node:audit
+pnpm fix:python:deps
+pnpm fix:spellcheck
+
+git add -u
+lint-staged

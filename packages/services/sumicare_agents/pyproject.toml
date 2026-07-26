@@ -1,0 +1,97 @@
+[project]
+name = "sumicare-agents"
+version = "0.1.0"
+description = "Sumicare Agentic Development Services"
+readme = "README.md"
+requires-python = ">=3.14"
+license = "MIT"
+authors = [{ name = "Yuriy Yarosh", email = "yuriy@yarosh.dev" }]
+
+[dependency-groups]
+docs = ["mkdocs-material == 9.*"]
+lint = ["black == 26.*", "ruff == 0.16.*"]
+nox = [
+  "nox>=2026.7.11",
+]
+test = ["coverage == 7.*", "pytest-timeout == 2.*", "pytest == 9.*"]
+typing = [
+  "mypy == 2.3.*",
+  "pyrefly == 1.1.*",
+]
+
+[tool.black]
+line-length = 120
+target-version = ["py314"]
+
+[tool.coverage.run]
+branch = true
+source_pkgs = [
+  "agent",
+  "training",
+]
+relative_files = true
+
+[tool.coverage.report]
+exclude_lines = [
+  "pragma: no cover",
+  "raise NotImplementedError",
+  "if TYPE_CHECKING",
+  "@overload",
+]
+
+[tool.coverage.paths]
+source = [
+  "agent/",
+  "training/",
+  "**/site-packages/",
+]
+
+[tool.mypy]
+python_version = "3.14"
+packages = ["agent", "training"]
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pyrefly]
+project-includes = [
+  "agent/**/*.py*",
+  "training/**/*.py*",
+  "**/*.ipynb",
+]
+
+[tool.pytest.ini_options]
+addopts = ["--strict-config", "--strict-markers"]
+filterwarnings = ["error"]
+xfail_strict = true
+
+[tool.ruff]
+src = [
+  "agent",
+  "training",
+]
+line-length = 120
+
+[tool.ruff.lint]
+extend-select = [
+  "I",  # isort
+  "N",  # pep8-naming
+  "RUF",  # ruff
+  "B",  # flake8-bugbear
+  "N",  # flake8-broken-line
+  "C4",  # flake8-comprehensions
+  "PIE",  # flake8-pie
+  "PT",  # flake8-pytest-style
+  "PTH",  # flake8-use-pathlib
+  "ERA",  # flake8-eradicate
+]
+ignore = ["F821", "N805"]
+isort.combine-as-imports = true
+
+[tool.ruff.lint.per-file-ignores]
+# F401: unused-import; Allow unused imports in __init__.py files
+"__init__.py" = ["F401"]
+
+[tool.uv]
+default-groups = "all"
+python-preference = "only-managed"

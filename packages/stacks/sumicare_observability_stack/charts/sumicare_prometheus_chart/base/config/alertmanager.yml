@@ -1,0 +1,16 @@
+global:
+  smtp_from: alertmanager@sumicare.local
+  smtp_smarthost: localhost:587
+receivers:
+  - name: web.hook
+    webhook_configs:
+      - url: http://127.0.0.1:5001/
+route:
+  group_by:
+    - alertname
+  group_interval: 10s
+  group_wait: 10s
+  receiver: web.hook
+  repeat_interval: 1h
+templates:
+  - /etc/alertmanager/*.tmpl

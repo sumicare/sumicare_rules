@@ -1,0 +1,19 @@
+provider:
+  kubernetes:
+    - alias: cdktn-cdk8s-cdk8s-provider
+resource:
+  kubernetes_manifest:
+    cdk8s-provider_cdk8s-provider-v1-ConfigMap-multiline-cm-default_E1653AB7:
+      manifest:
+        apiVersion: v1
+        data:
+          config.yaml: "key: value\\nnested:\\n  foo: bar\\n"
+        kind: ConfigMap
+        metadata:
+          name: multiline-cm
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+terraform:
+  required_providers:
+    kubernetes:
+      source: hashicorp/kubernetes
+      version: 3.2.1

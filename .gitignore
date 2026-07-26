@@ -1,0 +1,151 @@
+base/**/*
+
+# VS Code
+.vscode
+.vscode/**
+.idea
+.idea/**
+!.vscode/launch.json
+
+# IntelliJ
+*.iml
+.gradle
+/local.properties
+/.idea/caches
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+/.idea/navEditor.xml
+/.idea/assetWizardSettings.xml
+
+# Zed
+.zed/
+
+# Local
+.DS_Store
+*.local
+*.log*
+
+# Agents
+.agents/
+.agent/
+.agent-skills/
+.config/agents/
+AGENTS.md
+AGENTS.override.md
+CONVENTIONS.md
+
+# GenAI tools configuration is a meme
+.claude/
+.cursor/
+.cursorrules
+.cursor/rules/
+.codex/
+.codex/config.toml
+.codexrc
+.codex/skills/
+.gemini/
+.windsurf/
+.windsurfrules
+.windsurf/rules/
+.devin/
+.cline/
+.clinerules
+.clinerules/
+.clineignore
+cline_mcp_settings.json
+memory-bank/
+cline_docs/
+.copilot/
+.github/skills
+.github/instructions/
+.github/copilot-instructions.md
+.opencode/
+.opencode.json
+.opencode.jsonc
+.opencode/agent/
+.opencode/mode/
+.opencode/command/
+.opencode/plugin/
+.openclaw/
+.qwen/
+.qoder/
+.goose/
+.letta/
+.roo/
+.roomodes
+.roo/rules/
+.roorules
+.roo/mcp.json
+.rooignore
+.continue/
+.amp/
+.aide/
+.aider.*
+.aiderignore
+.kilo/
+.void/
+.kiro/
+.mcpjam/
+.zencoder/
+.sourcegraph/
+.cody/
+.codeium/
+.factory/
+
+# AI ignore files
+.uignore
+.aiignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.venv/
+venv/
+env/
+.ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+*.egg
+
+# UV cache
+.uv/
+
+# Build folders
+dist/
+build/
+.coverage/
+
+# cdk8s generated imports
+packages/stacks/**/imports
+
+# downloaded crds
+packages/stacks/**/crds
+
+# Node.js
+node_modules/
+.npm/
+*.tsbuildinfo
+
+# pnpm
+.pnpm-store/
+
+# Turborepo
+.turbo/
+
+# Bun
+bun.lockb
+.bun/
+
+# SBOM
+sbom*
+sbom*.json
+sbom.json
+
+# CDKTN/CDKTF
+cdktf.out

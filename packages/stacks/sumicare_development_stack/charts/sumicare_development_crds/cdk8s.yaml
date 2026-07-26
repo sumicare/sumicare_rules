@@ -1,0 +1,13 @@
+language: typescript
+imports:
+  - customrun:=crds/crd-tekton-customruns.yaml
+  - pipelinerun:=crds/crd-tekton-pipelineruns.yaml
+  - pipeline:=crds/crd-tekton-pipelines.yaml
+  - resolutionrequest:=crds/crd-tekton-resolutionrequests.yaml
+  - stepaction:=crds/crd-tekton-stepactions.yaml
+  - taskrun:=crds/crd-tekton-taskruns.yaml
+  - task:=crds/crd-tekton-tasks.yaml
+  - verificationpolicy:=crds/crd-tekton-verificationpolicies.yaml
+  - appdefinition:=crds/crd-theia-appdefinitions.yaml
+  - session:=crds/crd-theia-sessions.yaml
+  - workspace:=crds/crd-theia-workspaces.yaml

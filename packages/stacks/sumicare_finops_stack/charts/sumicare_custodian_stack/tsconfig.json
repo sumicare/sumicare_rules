@@ -1,0 +1,11 @@
+{
+	"extends": "../../../../../tsconfig.json",
+	"include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.mts"],
+	"compilerOptions": {
+		"rootDir": ".",
+		"paths": {
+			"FinOps/Custodian/*": ["./src/*"],
+			"FinOps/Custodian/Test/*": ["./test/*"]
+		}
+	}
+}

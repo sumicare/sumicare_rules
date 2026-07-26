@@ -1,0 +1,1680 @@
+- apiVersion: apiregistration.k8s.io/v1
+  kind: APIService
+  metadata:
+    labels:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: v1beta1.external.metrics.k8s.io
+  spec:
+    group: external.metrics.k8s.io
+    groupPriorityMinimum: 100
+    service:
+      name: keda-operator-metrics-apiserver
+      namespace: keda
+      port: 443
+    version: v1beta1
+    versionPriority: 100
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator
+  rules:
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - configmaps
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - configmaps/status
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - limitranges
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - pods
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - services
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - serviceaccounts
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - events
+      verbs:
+        - create
+        - patch
+    - apiGroups:
+        - discovery.k8s.io
+      resourceNames: []
+      resources:
+        - endpointslices
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - secrets
+      verbs:
+        - list
+        - watch
+    - apiGroups:
+        - "*"
+      resourceNames: []
+      resources:
+        - "*/scale"
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - "*"
+      resourceNames: []
+      resources:
+        - "*"
+      verbs:
+        - get
+    - apiGroups:
+        - apps
+      resourceNames: []
+      resources:
+        - deployments/scale
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - apps
+      resourceNames: []
+      resources:
+        - statefulsets/scale
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - apps
+      resourceNames: []
+      resources:
+        - deployments
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - apps
+      resourceNames: []
+      resources:
+        - statefulsets
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - autoscaling
+      resourceNames: []
+      resources:
+        - horizontalpodautoscalers
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - batch
+      resourceNames: []
+      resources:
+        - jobs
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - eventing.keda.sh
+      resourceNames: []
+      resources:
+        - cloudeventsources
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - eventing.keda.sh
+      resourceNames: []
+      resources:
+        - cloudeventsources/status
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - eventing.keda.sh
+      resourceNames: []
+      resources:
+        - clustercloudeventsources
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - eventing.keda.sh
+      resourceNames: []
+      resources:
+        - clustercloudeventsources/status
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - scaledjobs
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - scaledjobs/finalizers
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - scaledjobs/status
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - scaledobjects
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - scaledobjects/finalizers
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - scaledobjects/status
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - triggerauthentications
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - triggerauthentications/status
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-external-metrics-reader
+  rules:
+    - apiGroups:
+        - external.metrics.k8s.io
+      resourceNames: []
+      resources:
+        - externalmetrics
+      verbs:
+        - get
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-minimal-cluster-role
+  rules:
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - clustertriggerauthentications
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - clustertriggerauthentications/status
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - admissionregistration.k8s.io
+      resourceNames: []
+      resources:
+        - validatingwebhookconfigurations
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - apiregistration.k8s.io
+      resourceNames: []
+      resources:
+        - apiservices
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - eventing.keda.sh
+      resourceNames: []
+      resources:
+        - cloudeventsources
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - eventing.keda.sh
+      resourceNames: []
+      resources:
+        - cloudeventsources/status
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - eventing.keda.sh
+      resourceNames: []
+      resources:
+        - clustercloudeventsources
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - eventing.keda.sh
+      resourceNames: []
+      resources:
+        - clustercloudeventsources/status
+      verbs:
+        - get
+        - list
+        - patch
+        - update
+        - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-webhook
+  rules:
+    - apiGroups:
+        - autoscaling
+      resourceNames: []
+      resources:
+        - horizontalpodautoscalers
+      verbs:
+        - list
+        - watch
+    - apiGroups:
+        - keda.sh
+      resourceNames: []
+      resources:
+        - scaledobjects
+      verbs:
+        - list
+        - watch
+    - apiGroups:
+        - apps
+      resourceNames: []
+      resources:
+        - deployments
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - apps
+      resourceNames: []
+      resources:
+        - statefulsets
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - limitranges
+      verbs:
+        - list
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: keda-operator
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: keda-operator-operator
+      namespace: keda
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-hpa-controller-external-metrics
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: keda-operator-external-metrics-reader
+  subjects:
+    - kind: ServiceAccount
+      name: horizontal-pod-autoscaler
+      namespace: kube-system
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-minimal-cluster-role
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: keda-operator-minimal-cluster-role
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: keda-operator-operator
+      namespace: keda
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-system-auth-delegator
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: system:auth-delegator
+  subjects:
+    - kind: ServiceAccount
+      name: keda-operator-metrics-server
+      namespace: keda
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: webhook
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-webhook
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: keda-operator-webhook
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: keda-operator-webhooks
+      namespace: keda
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app.kubernetes.io/component: webhooks
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-admission-webhooks
+    namespace: keda
+  spec:
+    minReadySeconds: 0
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: keda-deployments-webhooks-deployment-c8f49a6c
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: webhooks
+          app.kubernetes.io/instance: keda-operator
+          app.kubernetes.io/name: keda-operator
+          cdk8s.io/metadata.addr: keda-deployments-webhooks-deployment-c8f49a6c
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: keda-deployments-webhooks-deployment-c8f49a6c
+                  namespaces:
+                    - keda
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: keda-deployments-webhooks-deployment-c8f49a6c
+                  namespaces:
+                    - keda
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: true
+        containers:
+          - args:
+              - --zap-log-level=info
+              - --zap-encoder=console
+              - --zap-time-encoding=rfc3339
+              - --cert-dir=/certs
+              - --health-probe-bind-address=:8081
+              - --port=9443
+              - --metrics-bind-address=:8080
+            command:
+              - /keda-admission-webhooks
+            env:
+              - name: WATCH_NAMESPACE
+                value: ""
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+            image: ghcr.io/kedacore/keda-admission-webhooks:2.20.2
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /healthz
+                port: 8081
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: keda-admission-webhooks
+            ports:
+              - containerPort: 9443
+                name: http
+                protocol: TCP
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /readyz
+                port: 8081
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 100m
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            volumeMounts:
+              - mountPath: /certs
+                name: certificates
+                readOnly: true
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        restartPolicy: Always
+        securityContext:
+          fsGroup: 1000
+          fsGroupChangePolicy: Always
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        serviceAccountName: keda-operator-webhooks
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: webhooks
+                app.kubernetes.io/instance: keda-operator
+                app.kubernetes.io/name: keda-operator
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: webhooks
+                app.kubernetes.io/instance: keda-operator
+                app.kubernetes.io/name: keda-operator
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+        volumes:
+          - name: certificates
+            secret:
+              secretName: kedaorg-certs
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app.kubernetes.io/component: operator
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator
+    namespace: keda
+  spec:
+    minReadySeconds: 0
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: keda-deployments-operator-deployment-c8538c30
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: operator
+          app.kubernetes.io/instance: keda-operator
+          app.kubernetes.io/name: keda-operator
+          cdk8s.io/metadata.addr: keda-deployments-operator-deployment-c8538c30
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: keda-deployments-operator-deployment-c8538c30
+                  namespaces:
+                    - keda
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: keda-deployments-operator-deployment-c8538c30
+                  namespaces:
+                    - keda
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: true
+        containers:
+          - args:
+              - --leader-elect
+              - --disable-compression=true
+              - --zap-log-level=info
+              - --zap-encoder=console
+              - --zap-time-encoding=rfc3339
+              - --enable-webhook-patching=true
+              - --cert-dir=/certs
+              - --enable-cert-rotation=true
+              - --cert-secret-name=kedaorg-certs
+              - --operator-service-name=keda-operator
+              - --metrics-server-service-name=keda-operator-metrics-apiserver
+              - --webhooks-service-name=keda-admission-webhooks
+              - --k8s-cluster-name=kubernetes-default
+              - --k8s-cluster-domain=cluster.local
+              - --enable-prometheus-metrics=false
+            command:
+              - /keda
+            env:
+              - name: WATCH_NAMESPACE
+                value: ""
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: OPERATOR_NAME
+                value: keda-operator
+              - name: KEDA_HTTP_DEFAULT_TIMEOUT
+                value: "3000"
+              - name: KEDA_HTTP_MIN_TLS_VERSION
+                value: TLS12
+            image: ghcr.io/kedacore/keda:2.20.2
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /healthz
+                port: 8081
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: keda-operator
+            ports:
+              - containerPort: 9666
+                name: metricsservice
+                protocol: TCP
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /readyz
+                port: 8081
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 100m
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            volumeMounts:
+              - mountPath: /certs
+                name: certificates
+                readOnly: true
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        restartPolicy: Always
+        securityContext:
+          fsGroup: 1000
+          fsGroupChangePolicy: Always
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        serviceAccountName: keda-operator-operator
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: operator
+                app.kubernetes.io/instance: keda-operator
+                app.kubernetes.io/name: keda-operator
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: operator
+                app.kubernetes.io/instance: keda-operator
+                app.kubernetes.io/name: keda-operator
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+        volumes:
+          - name: certificates
+            secret:
+              secretName: kedaorg-certs
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-metrics-apiserver
+    namespace: keda
+  spec:
+    minReadySeconds: 0
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: keda-deployments-metrics-server-deployment-c80f5d1f
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: metrics-server
+          app.kubernetes.io/instance: keda-operator
+          app.kubernetes.io/name: keda-operator
+          cdk8s.io/metadata.addr: keda-deployments-metrics-server-deployment-c80f5d1f
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: keda-deployments-metrics-server-deployment-c80f5d1f
+                  namespaces:
+                    - keda
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: keda-deployments-metrics-server-deployment-c80f5d1f
+                  namespaces:
+                    - keda
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: true
+        containers:
+          - args:
+              - --port=8080
+              - --secure-port=6443
+              - --logtostderr=true
+              - --stderrthreshold=ERROR
+              - --disable-compression=true
+              - --metrics-service-address=keda-operator.keda.svc.cluster.local:9666
+              - --client-ca-file=/certs/ca.crt
+              - --tls-cert-file=/certs/tls.crt
+              - --tls-private-key-file=/certs/tls.key
+              - --cert-dir=/certs
+              - --v=0
+              - --zap-log-level=info
+              - --zap-encoder=console
+              - --zap-time-encoding=rfc3339
+            command:
+              - /keda-adapter
+            env:
+              - name: WATCH_NAMESPACE
+                value: ""
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: KEDA_HTTP_DEFAULT_TIMEOUT
+                value: "3000"
+              - name: KEDA_HTTP_MIN_TLS_VERSION
+                value: TLS12
+            image: ghcr.io/kedacore/keda-metrics-apiserver:2.20.2
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /healthz
+                port: 6443
+                scheme: HTTPS
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: keda-operator-metrics-apiserver
+            ports:
+              - containerPort: 6443
+                name: https
+                protocol: TCP
+              - containerPort: 8080
+                name: metrics
+                protocol: TCP
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /readyz
+                port: 6443
+                scheme: HTTPS
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 100m
+                memory: 256Mi
+              requests:
+                cpu: 50m
+                memory: 128Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            volumeMounts:
+              - mountPath: /certs
+                name: certificates
+                readOnly: true
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        restartPolicy: Always
+        securityContext:
+          fsGroup: 1000
+          fsGroupChangePolicy: Always
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+        serviceAccountName: keda-operator-metrics-server
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: metrics-server
+                app.kubernetes.io/instance: keda-operator
+                app.kubernetes.io/name: keda-operator
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: metrics-server
+                app.kubernetes.io/instance: keda-operator
+                app.kubernetes.io/name: keda-operator
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+        volumes:
+          - name: certificates
+            secret:
+              secretName: kedaorg-certs
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    labels:
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-certs
+    namespace: keda
+  rules:
+    - apiGroups:
+        - coordination.k8s.io
+      resources:
+        - leases
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - ""
+      resources:
+        - secrets
+      verbs:
+        - create
+        - update
+    - apiGroups:
+        - ""
+      resourceNames:
+        - kedaorg-certs
+      resources:
+        - secrets
+      verbs:
+        - get
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-auth-reader
+    namespace: kube-system
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: extension-apiserver-authentication-reader
+  subjects:
+    - kind: ServiceAccount
+      name: keda-operator-metrics-server
+      namespace: keda
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-certs
+    namespace: keda
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: keda-operator-certs
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: keda-operator-operator
+      namespace: keda
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: webhooks
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-admission-webhooks
+    namespace: keda
+  spec:
+    externalIPs: []
+    ipFamilies:
+      - IPv4
+      - IPv6
+    ipFamilyPolicy: PreferDualStack
+    ports:
+      - name: https
+        port: 443
+        protocol: TCP
+        targetPort: 9443
+    selector:
+      app.kubernetes.io/component: webhooks
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/name: keda-operator
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: operator
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator
+    namespace: keda
+  spec:
+    externalIPs: []
+    ipFamilies:
+      - IPv4
+      - IPv6
+    ipFamilyPolicy: PreferDualStack
+    ports:
+      - name: metricsservice
+        port: 9666
+        protocol: TCP
+        targetPort: 9666
+    selector:
+      app.kubernetes.io/component: operator
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/name: keda-operator
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-metrics-apiserver
+    namespace: keda
+  spec:
+    externalIPs: []
+    ipFamilies:
+      - IPv4
+      - IPv6
+    ipFamilyPolicy: PreferDualStack
+    ports:
+      - name: https
+        port: 443
+        protocol: TCP
+        targetPort: 6443
+      - name: metrics
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/name: keda-operator
+    type: ClusterIP
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-metrics-server
+    namespace: keda
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: operator
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-operator
+    namespace: keda
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: webhooks
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-webhooks
+    namespace: keda
+- apiVersion: monitoring.coreos.com/v1
+  kind: ServiceMonitor
+  metadata:
+    labels:
+      app.kubernetes.io/component: metrics-server
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-metrics-server
+    namespace: keda
+  spec:
+    endpoints:
+      - honorLabels: true
+        interval: 30s
+        metricRelabelings:
+          - action: keep
+            regex: keda_(build_info|metrics_adapter|external_metrics|api_service)
+            sourceLabels:
+              - __name__
+        port: metrics
+        relabelings:
+          - action: replace
+            regex: ^(.*)$
+            replacement: $1
+            separator: ;
+            sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: nodename
+          - action: replace
+            replacement: keda-operator
+            targetLabel: otel_service_name
+          - action: replace
+            replacement: keda
+            targetLabel: otel_service_namespace
+        scheme: http
+    jobLabel: jobLabel
+    namespaceSelector:
+      matchNames:
+        - keda
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: metrics-server
+        app.kubernetes.io/instance: keda-operator
+        app.kubernetes.io/name: keda-operator
+    targetLabels:
+      - otel.service.name/keda-operator
+      - otel.service.namespace/keda
+- apiVersion: monitoring.coreos.com/v1
+  kind: ServiceMonitor
+  metadata:
+    labels:
+      app.kubernetes.io/component: operator
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-operator
+    namespace: keda
+  spec:
+    endpoints:
+      - honorLabels: true
+        interval: 30s
+        metricRelabelings:
+          - action: keep
+            regex: keda_(build_info|operator|scaled_object|trigger|scaler|metric)
+            sourceLabels:
+              - __name__
+        port: metrics
+        relabelings:
+          - action: replace
+            regex: ^(.*)$
+            replacement: $1
+            separator: ;
+            sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: nodename
+          - action: replace
+            replacement: keda-operator
+            targetLabel: otel_service_name
+          - action: replace
+            replacement: keda
+            targetLabel: otel_service_namespace
+        scheme: http
+    jobLabel: jobLabel
+    namespaceSelector:
+      matchNames:
+        - keda
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: keda-operator
+        app.kubernetes.io/name: keda-operator
+    targetLabels:
+      - otel.service.name/keda-operator
+      - otel.service.namespace/keda
+- apiVersion: monitoring.coreos.com/v1
+  kind: ServiceMonitor
+  metadata:
+    labels:
+      app.kubernetes.io/component: webhooks
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-operator-webhooks
+    namespace: keda
+  spec:
+    endpoints:
+      - honorLabels: true
+        interval: 30s
+        metricRelabelings:
+          - action: keep
+            regex: keda_(build_info|admission_webhooks|webhook)
+            sourceLabels:
+              - __name__
+        port: metrics
+        relabelings:
+          - action: replace
+            regex: ^(.*)$
+            replacement: $1
+            separator: ;
+            sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: nodename
+          - action: replace
+            replacement: keda-operator
+            targetLabel: otel_service_name
+          - action: replace
+            replacement: keda
+            targetLabel: otel_service_namespace
+        scheme: http
+    jobLabel: jobLabel
+    namespaceSelector:
+      matchNames:
+        - keda
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: webhooks
+        app.kubernetes.io/instance: keda-operator
+        app.kubernetes.io/name: keda-operator
+    targetLabels:
+      - otel.service.name/keda-operator
+      - otel.service.namespace/keda
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    labels:
+      app.kubernetes.io/component: webhooks
+      app.kubernetes.io/instance: keda-operator
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: keda-operator
+      app.kubernetes.io/part-of: keda-operator
+      app.kubernetes.io/version: 2.20.2
+    name: keda-admission
+  webhooks:
+    - admissionReviewVersions:
+        - v1
+      clientConfig:
+        service:
+          name: keda-admission-webhooks
+          namespace: keda
+          path: /validate-keda-sh-v1alpha1-scaledobject
+      failurePolicy: Ignore
+      matchPolicy: Equivalent
+      name: vscaledobject.kb.io
+      namespaceSelector: {}
+      objectSelector: {}
+      rules:
+        - apiGroups:
+            - keda.sh
+          apiVersions:
+            - v1alpha1
+          operations:
+            - CREATE
+            - UPDATE
+          resources:
+            - scaledobjects
+      sideEffects: None
+      timeoutSeconds: 10
+    - admissionReviewVersions:
+        - v1
+      clientConfig:
+        service:
+          name: keda-admission-webhooks
+          namespace: keda
+          path: /validate-keda-sh-v1alpha1-scaledjob
+      failurePolicy: Ignore
+      matchPolicy: Equivalent
+      name: vscaledjob.kb.io
+      namespaceSelector: {}
+      objectSelector: {}
+      rules:
+        - apiGroups:
+            - keda.sh
+          apiVersions:
+            - v1alpha1
+          operations:
+            - CREATE
+            - UPDATE
+          resources:
+            - scaledjobs
+      sideEffects: None
+      timeoutSeconds: 10
+    - admissionReviewVersions:
+        - v1
+      clientConfig:
+        service:
+          name: keda-admission-webhooks
+          namespace: keda
+          path: /validate-keda-sh-v1alpha1-triggerauthentication
+      failurePolicy: Ignore
+      matchPolicy: Equivalent
+      name: vstriggerauthentication.kb.io
+      namespaceSelector: {}
+      objectSelector: {}
+      rules:
+        - apiGroups:
+            - keda.sh
+          apiVersions:
+            - v1alpha1
+          operations:
+            - CREATE
+            - UPDATE
+          resources:
+            - triggerauthentications
+      sideEffects: None
+      timeoutSeconds: 10
+    - admissionReviewVersions:
+        - v1
+      clientConfig:
+        service:
+          name: keda-admission-webhooks
+          namespace: keda
+          path: /validate-keda-sh-v1alpha1-clustertriggerauthentication
+      failurePolicy: Ignore
+      matchPolicy: Equivalent
+      name: vsclustertriggerauthentication.kb.io
+      namespaceSelector: {}
+      objectSelector: {}
+      rules:
+        - apiGroups:
+            - keda.sh
+          apiVersions:
+            - v1alpha1
+          operations:
+            - CREATE
+            - UPDATE
+          resources:
+            - clustertriggerauthentications
+      sideEffects: None
+      timeoutSeconds: 10
+    - admissionReviewVersions:
+        - v1
+      clientConfig:
+        service:
+          name: keda-admission-webhooks
+          namespace: keda
+          path: /validate-eventing-keda-sh-v1alpha1-cloudeventsource
+      failurePolicy: Ignore
+      matchPolicy: Equivalent
+      name: vcloudeventsource.kb.io
+      namespaceSelector: {}
+      objectSelector: {}
+      rules:
+        - apiGroups:
+            - eventing.keda.sh
+          apiVersions:
+            - v1alpha1
+          operations:
+            - CREATE
+            - UPDATE
+          resources:
+            - cloudeventsources
+      sideEffects: None
+      timeoutSeconds: 10
+    - admissionReviewVersions:
+        - v1
+      clientConfig:
+        service:
+          name: keda-admission-webhooks
+          namespace: keda
+          path: /validate-eventing-keda-sh-v1alpha1-clustercloudeventsource
+      failurePolicy: Ignore
+      matchPolicy: Equivalent
+      name: vclustercloudeventsource.kb.io
+      namespaceSelector: {}
+      objectSelector: {}
+      rules:
+        - apiGroups:
+            - eventing.keda.sh
+          apiVersions:
+            - v1alpha1
+          operations:
+            - CREATE
+            - UPDATE
+          resources:
+            - clustercloudeventsources
+      sideEffects: None
+      timeoutSeconds: 10

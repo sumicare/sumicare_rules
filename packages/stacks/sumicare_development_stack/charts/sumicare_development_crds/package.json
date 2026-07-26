@@ -1,0 +1,44 @@
+{
+	"name": "@sumicare/stack-development-crds",
+	"version": "0.1.0",
+	"license": "MIT",
+	"private": false,
+	"type": "module",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"source": "./src/DevelopmentCrdsChart.ts",
+	"types": "./dist/src/DevelopmentCrdsChart.d.ts",
+	"exports": {
+		".": {
+			"source": "./src/DevelopmentCrdsChart.ts",
+			"types": "./dist/src/DevelopmentCrdsChart.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "rslib build",
+		"watch": "rslib build -w"
+	},
+	"dependencies": {
+		"@sumicare/chart-commons": "0.1.0",
+		"cdk8s": "^2.70.84",
+		"cdk8s-plus-33": "^2.5.39",
+		"constructs": "^10.7.0",
+		"octokit": "^5.0.5",
+		"zod": "^4.4.3"
+	},
+	"devDependencies": {
+		"@rslib/core": "^0.23.2",
+		"@rstest/adapter-rslib": "^0.11.2",
+		"@rstest/core": "^0.11.2",
+		"@sumicare/chart-commons-dev": "0.1.0",
+		"@types/node": "^26.1.1",
+		"cdk8s-cli": "^2.207.41",
+		"typescript": "^7.0.2"
+	}
+}

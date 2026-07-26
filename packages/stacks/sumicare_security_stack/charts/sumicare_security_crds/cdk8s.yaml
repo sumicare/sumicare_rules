@@ -1,0 +1,24 @@
+language: typescript
+imports:
+  - kubearmorconfig:=crds/crd-kubearmor-configs.yaml
+  - csp:=crds/crd-kubearmor-csp.yaml
+  - hsp:=crds/crd-kubearmor-hsp.yaml
+  - ksp:=crds/crd-kubearmor-ksp.yaml
+  - nsp:=crds/crd-kubearmor-nsp.yaml
+  - cleanuppolicy:=crds/crd-kyverno-cleanuppolicies.yaml
+  - clustercleanuppolicy:=crds/crd-kyverno-clustercleanuppolicies.yaml
+  - clusterpolicy:=crds/crd-kyverno-clusterpolicies.yaml
+  - globalcontextentry:=crds/crd-kyverno-globalcontextentries.yaml
+  - policy:=crds/crd-kyverno-policies.yaml
+  - policyexception:=crds/crd-kyverno-policyexceptions.yaml
+  - updaterequest:=crds/crd-kyverno-updaterequests.yaml
+  - clusterephemeralreport:=crds/crd-kyverno-clusterephemeralreports.yaml
+  - ephemeralreport:=crds/crd-kyverno-ephemeralreports.yaml
+  - clusterpolicyreport:=crds/crd-kyverno-clusterpolicyreports.yaml
+  - policyreport:=crds/crd-kyverno-policyreports.yaml
+  - falcoconfig:=crds/crd-falco-configs.yaml
+  - falcoplugin:=crds/crd-falco-plugins.yaml
+  - falcorulesfile:=crds/crd-falco-rulesfiles.yaml
+  - falcocomponent:=crds/crd-falco-components.yaml
+  - falco:=crds/crd-falco-falcos.yaml
+  - secretproviderclass:=crds/crd-secrets-store-csi-secretproviderclasses.yaml

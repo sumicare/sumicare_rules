@@ -1,0 +1,14 @@
+- apiVersion: kamaji.clastix.io/v1alpha1
+  kind: DataStore
+  metadata:
+    labels:
+      app.kubernetes.io/instance: default
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: default
+      app.kubernetes.io/part-of: default
+      app.kubernetes.io/version: 0.1.0
+      kamaji.clastix.io/datastore: etcd
+    name: default
+  spec:
+    driver: etcd
+    endpoints: []

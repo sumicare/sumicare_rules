@@ -1,0 +1,45 @@
+crd-flink-bluegreendeployments.yaml:
+  hash: 02edbf41315eb94cb2b7785cca02a08c877b7c0aef50f41e7166b2591655e00b
+  commitHash: 6e9caeb48118934f4311534725196c52159eaa21
+crd-flink-deployments.yaml:
+  hash: e3f4c40707fd3e0db9676eddcbb2b80de79c5f743ec5fcff4a6c3d27bca05f0d
+  commitHash: 6e9caeb48118934f4311534725196c52159eaa21
+crd-flink-sessionjobs.yaml:
+  hash: eb008700770c568cd1533a58f0151859c8769d0e2c7e2e34cdf810b89d8a1095
+  commitHash: bdd2ff371c455ad0f7d245117b822a554cbef301
+crd-flink-statesnapshots.yaml:
+  hash: ac1d6348d5c649764f84c9d677963e79028060614f8c1d01cc05d24768cecf59
+  commitHash: bdd2ff371c455ad0f7d245117b822a554cbef301
+crd-nats.yaml:
+  hash: 09ba3a73175ab6e861c2f8959fab065c91b02627b8b9b6571c15af2d306171d0
+  commitHash: 645e5e4a8083c5c7c890ed3d516823dffd7a7210
+crd-strimzi-kafka.yaml:
+  hash: 18544eaa8daa598248367467e7b58f40790b6f6b066986dff46e90c98d6509f2
+  commitHash: 964e714383df9c768bb729fd3ca8ba5c5b6515c1
+crd-strimzi-kafkabridge.yaml:
+  hash: c0d4e308e69a3803fd089c37045c23f629c951411631d090392595e66d948be6
+  commitHash: 964e714383df9c768bb729fd3ca8ba5c5b6515c1
+crd-strimzi-kafkaconnect.yaml:
+  hash: b2a65d7baf1334ffd5792b06086d0a88b5418c5892d12a9cd44a06365c3a9ecd
+  commitHash: 964e714383df9c768bb729fd3ca8ba5c5b6515c1
+crd-strimzi-kafkaconnector.yaml:
+  hash: 1bac2691433f55f3c5aaf1306ff1a31eb4a9c4257f3ffc56a0b32bcb168075eb
+  commitHash: c70a095997f9dff7be7b52ad3bc1560758a4c24e
+crd-strimzi-kafkamirrormaker2.yaml:
+  hash: b0c943b20911c1481c745bcd0b279e84dfb58942245ee3bd3b29b78406abd5d9
+  commitHash: 964e714383df9c768bb729fd3ca8ba5c5b6515c1
+crd-strimzi-kafkanodepool.yaml:
+  hash: 7af56e5d946cc5c7816154339d988230a4ba1b058300720d8122fc71d8bbe2e1
+  commitHash: c70a095997f9dff7be7b52ad3bc1560758a4c24e
+crd-strimzi-kafkarebalance.yaml:
+  hash: ae3fc33d7431b1d333916fe54ad0564afced0967a50134f977f138f7eff160b3
+  commitHash: c70a095997f9dff7be7b52ad3bc1560758a4c24e
+crd-strimzi-kafkatopic.yaml:
+  hash: 4f2849dc0c8ddde306074648df5fb631fd43d042c4827f4391e97861596899a3
+  commitHash: c70a095997f9dff7be7b52ad3bc1560758a4c24e
+crd-strimzi-kafkauser.yaml:
+  hash: e4b6aa159bbeac133b254903b12759cd5fa64ff391c8c5f92a4b189a8154b0f0
+  commitHash: 964e714383df9c768bb729fd3ca8ba5c5b6515c1
+crd-strimzi-strimzipodset.yaml:
+  hash: 10c7a92e5262de11a46dc8ac69d2581ed5410f6cb60109ef037fe702b20d4cae
+  commitHash: c70a095997f9dff7be7b52ad3bc1560758a4c24e

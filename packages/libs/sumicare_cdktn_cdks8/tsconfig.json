@@ -1,0 +1,11 @@
+{
+	"extends": "../../../tsconfig.json",
+	"include": ["src/**/*.ts", "test/**/*.ts"],
+	"compilerOptions": {
+		"rootDir": ".",
+		"paths": {
+			"CdkTnCdk8s/*": ["./src/*"],
+			"CdkTnCdk8s/Test/*": ["./test/*"]
+		}
+	}
+}

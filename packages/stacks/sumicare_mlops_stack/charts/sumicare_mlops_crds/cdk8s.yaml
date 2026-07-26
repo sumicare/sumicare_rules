@@ -1,0 +1,37 @@
+language: typescript
+imports:
+  - agentgatewaybackend:=crds/crd-agentgateway-backends.yaml
+  - agentgatewaymodel:=crds/crd-agentgateway-models.yaml
+  - agentgatewayparameter:=crds/crd-agentgateway-parameters.yaml
+  - agentgatewaypolicy:=crds/crd-agentgateway-policies.yaml
+  - agentharness:=crds/crd-kagent-agentharnesses.yaml
+  - agent:=crds/crd-kagent-agents.yaml
+  - memory:=crds/crd-kagent-memories.yaml
+  - modelconfig:=crds/crd-kagent-modelconfigs.yaml
+  - modelproviderconfig:=crds/crd-kagent-modelproviderconfigs.yaml
+  - remotemcpserver:=crds/crd-kagent-remotemcpservers.yaml
+  - sandboxagent:=crds/crd-kagent-sandboxagents.yaml
+  - toolserver:=crds/crd-kagent-toolservers.yaml
+  - raycluster:=crds/crd-kuberay-rayclusters.yaml
+  - rayjob:=crds/crd-kuberay-rayjobs.yaml
+  - rayservice:=crds/crd-kuberay-rayservices.yaml
+  - acceleratorclass:=crds/crd-ome-acceleratorclasses.yaml
+  - basemodel:=crds/crd-ome-basemodels.yaml
+  - benchmarkjob:=crds/crd-ome-benchmarkjobs.yaml
+  - clusterbasemodel:=crds/crd-ome-clusterbasemodels.yaml
+  - clusterservingruntime:=crds/crd-ome-clusterservingruntimes.yaml
+  - finetunedweight:=crds/crd-ome-finetunedweights.yaml
+  - inferenceservice:=crds/crd-ome-inferenceservices.yaml
+  - servingruntime:=crds/crd-ome-servingruntimes.yaml
+  - loraadapter:=crds/crd-vllm-loraadapter.yaml
+  - cronjob:=crds/crd-volcano-cronjobs.yaml
+  - job:=crds/crd-volcano-jobs.yaml
+  - command:=crds/crd-volcano-commands.yaml
+  - colocationconfiguration:=crds/crd-volcano-colocationconfigurations.yaml
+  - numatopology:=crds/crd-volcano-numatopologies.yaml
+  - podgroup:=crds/crd-volcano-podgroups.yaml
+  - queue:=crds/crd-volcano-queues.yaml
+  - nodeshard:=crds/crd-volcano-nodeshards.yaml
+  - hypernode:=crds/crd-volcano-hypernodes.yaml
+  - jobflow:=crds/crd-volcano-jobflows.yaml
+  - jobtemplate:=crds/crd-volcano-jobtemplates.yaml

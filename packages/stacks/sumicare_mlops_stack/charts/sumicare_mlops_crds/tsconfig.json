@@ -1,0 +1,13 @@
+{
+	"extends": "../../../../../tsconfig.json",
+	"include": ["src/**/*.ts", "test/**/*.ts", "imports/**/*.ts"],
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": ["node"],
+		"paths": {
+			"Mlops/Crds/Imports/*": ["./imports/*"],
+			"Mlops/Crds/*": ["./src/*"],
+			"Mlops/Crds/Test/*": ["./test/*"]
+		}
+	}
+}

@@ -1,0 +1,8 @@
+provider:
+  kubernetes:
+    - alias: cdktn-cdk8s-cdk8s-provider
+terraform:
+  required_providers:
+    kubernetes:
+      source: hashicorp/kubernetes
+      version: 3.2.1

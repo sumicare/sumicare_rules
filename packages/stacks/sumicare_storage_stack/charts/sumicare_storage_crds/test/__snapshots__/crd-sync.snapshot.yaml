@@ -1,0 +1,63 @@
+crd-cloudnativepg-all.yaml:
+  hash: 9f5ab30e5b9fd09c2ad786feb01a46cdcae12993a396eb2ce37a6d40a400f4b5
+  commitHash: d1b5ad60cee2d9432a9cc05627b42a8d8dc7bbae
+crd-garage-garagenodes.yaml:
+  hash: b49e5f88da661d17dd50a1bf8a2aa4882fca6a06de57d7ae6666f56a95623f98
+  commitHash: 0fd1b7342ba5626c97f832726567ba73b72aec0b
+crd-rook-all.yaml:
+  hash: 123ef552d4ae2827d06f48260cf1ecfe575c311f1810acf3edf20d59913f9411
+  commitHash: 6ed8f3efcd2c9290a46d8faf534ce9e7f130061c
+crd-secrets-store-csi-secretproviderclasses.yaml:
+  hash: 5b25cc3fbd8dce30ac8d20adb0789ef9d51207b63ba6a2b68ad5f624fc8b7669
+  commitHash: 5c75e89f06619ddd18f0d42d779a57efad5a72c7
+crd-topolvm-cybozu-logicalvolumes.yaml:
+  hash: 7884856a820ae22db5e33a40bdb31b8035ec443e004b8b7ac8a03820a20af386
+  commitHash: abd2ff34d22e0294361cfdf8ca3ebc6fa0eba57a
+crd-topolvm-io-logicalvolumes.yaml:
+  hash: a5c1c7c81b3846a948e9637fe0e7a2820d28e8669f635ca7e146f1398ef85e9e
+  commitHash: abd2ff34d22e0294361cfdf8ca3ebc6fa0eba57a
+crd-valkey-clusters.yaml:
+  hash: 91af08a595c7ae7f2d9b5dbd0ed021e0edf5fcf990bac876518291428d3b4e2e
+  commitHash: 05010b1afe27976bc174790e006d22b52bb3813f
+crd-valkey-nodes.yaml:
+  hash: a00c78917958cd0ad327c7c17a7c3891e128d8c1210aa4ef267f42a011b122c2
+  commitHash: 252ff4f45035d8ddd9445911147d3d60ee07b7ec
+crd-velero-backuprepositories.yaml:
+  hash: 4dd7fbcbe3f0ee2edb925017c95c40d3697e59cdec05802e230f538013ef91da
+  commitHash: dff0748f289dd4986939b68471ad40a124fc6dc9
+crd-velero-backups.yaml:
+  hash: 4c31325ec84922e554f593c8d9be401983518eb2c6fd6355d3243d28149b6963
+  commitHash: 93bb34fc6382a8bb721109e7cb514b786aaeda12
+crd-velero-backupstoragelocations.yaml:
+  hash: b8d0af5c037ba192d5f969b4865298e570c97309b48569d01db51a5060e1f288
+  commitHash: 93bb34fc6382a8bb721109e7cb514b786aaeda12
+crd-velero-datadownloads.yaml:
+  hash: adbfef52659f4c047ce12ab4c4f923fcade1d441d0a91deb1948b7286970b3ec
+  commitHash: 93bb34fc6382a8bb721109e7cb514b786aaeda12
+crd-velero-datauploads.yaml:
+  hash: 980fa0760d7c8cd4ad3364b6e39766462e7ba08f3ebc867b6d5c507647d58569
+  commitHash: 93bb34fc6382a8bb721109e7cb514b786aaeda12
+crd-velero-deletebackuprequests.yaml:
+  hash: d32a3b7b3a7c6d54b77bcbe509ea3f18b2b5c5ec10beb254537a07193b932572
+  commitHash: dff0748f289dd4986939b68471ad40a124fc6dc9
+crd-velero-downloadrequests.yaml:
+  hash: dfd374b026b8f78f9ee1aa108b1569513c4a92270db807949ebaf996cee8a0d7
+  commitHash: dff0748f289dd4986939b68471ad40a124fc6dc9
+crd-velero-podvolumebackups.yaml:
+  hash: 9b47df204f05131bc81857c5c176d0feaed9db81f169684b88048fb91a280915
+  commitHash: 93bb34fc6382a8bb721109e7cb514b786aaeda12
+crd-velero-podvolumerestores.yaml:
+  hash: 39c511b52a52e5c69238d57768ef9d71342e4e4f908685df37cbe332da827fbb
+  commitHash: 93bb34fc6382a8bb721109e7cb514b786aaeda12
+crd-velero-restores.yaml:
+  hash: 6bd460ee99d611acf870e83e5a0a9757f55386dc3888f42a19f1b152fe637e73
+  commitHash: dff0748f289dd4986939b68471ad40a124fc6dc9
+crd-velero-schedules.yaml:
+  hash: 6d9bc2fbf88adc47af5de68d927e1f16e4cb2f7dd5e9826221b5cafb52639b35
+  commitHash: dff0748f289dd4986939b68471ad40a124fc6dc9
+crd-velero-serverstatusrequests.yaml:
+  hash: 618bc89ed6626a84b88bbfb13d19869dcf7ba033f47d1fd1b9e213296a61e572
+  commitHash: dff0748f289dd4986939b68471ad40a124fc6dc9
+crd-velero-volumesnapshotlocations.yaml:
+  hash: 477928903df62814960b458f4800cb91c729153531d1d51cfe916a6b103b6261
+  commitHash: dff0748f289dd4986939b68471ad40a124fc6dc9

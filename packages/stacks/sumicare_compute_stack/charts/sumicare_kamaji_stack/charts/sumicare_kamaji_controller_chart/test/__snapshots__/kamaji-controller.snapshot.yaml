@@ -1,0 +1,823 @@
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-manager-role
+  rules:
+    - apiGroups:
+        - apps
+      resourceNames: []
+      resources:
+        - deployments
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - batch
+      resourceNames: []
+      resources:
+        - jobs
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - configmaps
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - secrets
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - services
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - namespaces
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - kamaji.clastix.io
+      resourceNames: []
+      resources:
+        - datastores
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - kamaji.clastix.io
+      resourceNames: []
+      resources:
+        - datastores/status
+      verbs:
+        - get
+        - patch
+        - update
+    - apiGroups:
+        - kamaji.clastix.io
+      resourceNames: []
+      resources:
+        - tenantcontrolplanes
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - kamaji.clastix.io
+      resourceNames: []
+      resources:
+        - tenantcontrolplanes/finalizers
+      verbs:
+        - update
+    - apiGroups:
+        - kamaji.clastix.io
+      resourceNames: []
+      resources:
+        - tenantcontrolplanes/status
+      verbs:
+        - get
+        - patch
+        - update
+    - apiGroups:
+        - networking.k8s.io
+      resourceNames: []
+      resources:
+        - ingresses
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - kamaji.clastix.io
+      resourceNames: []
+      resources:
+        - kubeconfiggenerators
+      verbs:
+        - create
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - kamaji.clastix.io
+      resourceNames: []
+      resources:
+        - kubeconfiggenerators/status
+      verbs:
+        - get
+        - patch
+        - update
+    - apiGroups:
+        - kamaji.clastix.io
+      resourceNames: []
+      resources:
+        - kubeconfiggenerators/finalizers
+      verbs:
+        - update
+    - apiGroups:
+        - gateway.networking.k8s.io
+      resourceNames: []
+      resources:
+        - gateways
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - gateway.networking.k8s.io
+      resourceNames: []
+      resources:
+        - grpcroutes
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - gateway.networking.k8s.io
+      resourceNames: []
+      resources:
+        - httproutes
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - gateway.networking.k8s.io
+      resourceNames: []
+      resources:
+        - tlsroutes
+      verbs:
+        - create
+        - delete
+        - get
+        - list
+        - patch
+        - update
+        - watch
+    - apiGroups:
+        - metrics.k8s.io
+      resourceNames: []
+      resources:
+        - pods
+      verbs:
+        - get
+        - list
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-metrics-reader
+  rules:
+    - apiGroups:
+        - metrics.k8s.io
+      resourceNames: []
+      resources:
+        - pods
+      verbs:
+        - get
+        - list
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-proxy-role
+  rules:
+    - apiGroups:
+        - authentication.k8s.io
+      resourceNames: []
+      resources:
+        - tokenreviews
+      verbs:
+        - create
+    - apiGroups:
+        - authorization.k8s.io
+      resourceNames: []
+      resources:
+        - subjectaccessreviews
+      verbs:
+        - create
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-manager-role
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: kamaji-manager-role
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: kamaji
+      namespace: kamaji-system
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-metrics-reader
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: kamaji-metrics-reader
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: kamaji
+      namespace: kamaji-system
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-proxy-role
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: kamaji-proxy-role
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: kamaji
+      namespace: kamaji-system
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji
+    namespace: kamaji-system
+  spec:
+    minReadySeconds: 0
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: kamaji-controller-deployment-controller-deployment-c82fc8e3
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: controller
+          app.kubernetes.io/instance: kamaji
+          app.kubernetes.io/name: kamaji
+          cdk8s.io/metadata.addr: kamaji-controller-deployment-controller-deployment-c82fc8e3
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: kamaji-controller-deployment-controller-deployment-c82fc8e3
+                  namespaces:
+                    - kamaji-system
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: kamaji-controller-deployment-controller-deployment-c82fc8e3
+                  namespaces:
+                    - kamaji-system
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: true
+        containers:
+          - args:
+              - manager
+              - --metrics-bind-address=:8080
+              - --health-probe-bind-address=:8081
+              - --leader-elect
+              - --tmp-directory=/tmp/kamaji
+              - --kine-image=rancher/kine:v0.11.10-amd64
+              - --max-concurrent-tcp-reconciles=1
+              - --controller-reconcile-timeout=30s
+              - --cache-resync-period=10h
+              - --certificate-expiration-deadline=24h
+              - --webhook-service-name=kamaji-webhook-service
+              - --webhook-ca-path=/tmp/k8s-webhook-server/serving-certs/ca.crt
+              - --datastore=default
+            command:
+              - /kamaji
+            env:
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: SERVICE_ACCOUNT
+                valueFrom:
+                  fieldRef:
+                    fieldPath: spec.serviceAccountName
+            image: clastix/kamaji:26.7.5-edge
+            imagePullPolicy: Always
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /healthz
+                port: 8081
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 5
+            name: manager
+            ports:
+              - containerPort: 9443
+                name: webhook-server
+                protocol: TCP
+              - containerPort: 8080
+                name: metrics
+                protocol: TCP
+              - containerPort: 8081
+                name: healthcheck
+                protocol: TCP
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /readyz
+                port: 8081
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 400m
+                memory: 1024Mi
+              requests:
+                cpu: 200m
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: 65532
+              seccompProfile:
+                type: RuntimeDefault
+            volumeMounts:
+              - mountPath: /tmp
+                name: tmp
+              - mountPath: /tmp/k8s-webhook-server/serving-certs
+                name: cert
+                readOnly: true
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        restartPolicy: Always
+        securityContext:
+          fsGroup: 65532
+          fsGroupChangePolicy: Always
+          runAsGroup: 65532
+          runAsNonRoot: true
+          runAsUser: 65532
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccountName: kamaji
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 10
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: controller
+                app.kubernetes.io/instance: kamaji
+                app.kubernetes.io/name: kamaji
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: controller
+                app.kubernetes.io/instance: kamaji
+                app.kubernetes.io/name: kamaji
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+        volumes:
+          - emptyDir:
+              medium: Memory
+            name: tmp
+          - name: cert
+            secret:
+              secretName: kamaji-webhook-server-cert
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: MutatingWebhookConfiguration
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-mutating-webhook-configuration
+  spec:
+    webhooks:
+      - admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: kamaji-webhook-service
+            namespace: kamaji-system
+            path: /mutate-kamaji-clastix-io-v1alpha1-tenantcontrolplane
+        failurePolicy: Fail
+        name: mtenantcontrolplane.kb.io
+        rules:
+          - apiGroups:
+              - kamaji.clastix.io
+            apiVersions:
+              - v1alpha1
+            operations:
+              - CREATE
+              - UPDATE
+            resources:
+              - tenantcontrolplanes
+        sideEffects: None
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    labels:
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-leader-election-role
+    namespace: kamaji-system
+  rules:
+    - apiGroups:
+        - ""
+      resources:
+        - configmaps
+      verbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+    - apiGroups:
+        - coordination.k8s.io
+      resources:
+        - leases
+      verbs:
+        - get
+        - list
+        - watch
+        - create
+        - update
+        - patch
+        - delete
+    - apiGroups:
+        - ""
+      resources:
+        - events
+      verbs:
+        - create
+        - patch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-leader-election-role
+    namespace: kamaji-system
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: kamaji-leader-election-role
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: kamaji
+      namespace: kamaji-system
+- apiVersion: secrets-store.csi.x-k8s.io/v1
+  kind: SecretProviderClass
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-webhook-spc
+    namespace: kamaji-system
+  spec:
+    parameters:
+      altNames: kamaji-webhook-service.kamaji-system.svc,kamaji-webhook-service.kamaji-system.svc.cluster.local
+      commonName: kamaji-webhook-service.kamaji-system.svc
+      pkiPath: pki/issue/kamaji-webhook
+      ttl: 24h
+      vaultAddress: https://openbao.vault-system.svc:8200
+      vaultRole: kamaji-webhook
+    provider: openbao
+    secretObjects:
+      - data:
+          - key: tls.crt
+            objectName: certificate
+          - key: tls.key
+            objectName: private_key
+          - key: ca.crt
+            objectName: issuing_ca
+        secretName: kamaji-webhook-server-cert
+        type: kubernetes.io/tls
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-metrics-service
+    namespace: kamaji-system
+  spec:
+    externalIPs: []
+    ipFamilies:
+      - IPv4
+      - IPv6
+    ipFamilyPolicy: PreferDualStack
+    ports:
+      - name: metrics
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/name: kamaji
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-webhook-service
+    namespace: kamaji-system
+  spec:
+    externalIPs: []
+    ipFamilies:
+      - IPv4
+      - IPv6
+    ipFamilyPolicy: PreferDualStack
+    ports:
+      - name: webhook-server
+        port: 443
+        protocol: TCP
+        targetPort: 9443
+    selector:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/name: kamaji
+    type: ClusterIP
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: kamaji
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji
+    namespace: kamaji-system
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: ValidatingWebhookConfiguration
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: kamaji
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji
+      app.kubernetes.io/part-of: kamaji
+      app.kubernetes.io/version: 26.7.5-edge
+    name: kamaji-validating-webhook-configuration
+  spec:
+    webhooks:
+      - admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: kamaji-webhook-service
+            namespace: kamaji-system
+            path: /telemetry
+        failurePolicy: Ignore
+        name: telemetry.kamaji.clastix.io
+        rules:
+          - apiGroups:
+              - kamaji.clastix.io
+            apiVersions:
+              - v1alpha1
+            operations:
+              - CREATE
+              - UPDATE
+              - DELETE
+            resources:
+              - tenantcontrolplanes
+        sideEffects: None
+      - admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: kamaji-webhook-service
+            namespace: kamaji-system
+            path: /validate--v1-secret
+        failurePolicy: Ignore
+        name: vdatastoresecrets.kb.io
+        rules:
+          - apiGroups:
+              - ""
+            apiVersions:
+              - v1
+            operations:
+              - DELETE
+            resources:
+              - secrets
+        sideEffects: None
+      - admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: kamaji-webhook-service
+            namespace: kamaji-system
+            path: /validate-kamaji-clastix-io-v1alpha1-datastore
+        failurePolicy: Fail
+        name: vdatastore.kb.io
+        rules:
+          - apiGroups:
+              - kamaji.clastix.io
+            apiVersions:
+              - v1alpha1
+            operations:
+              - CREATE
+              - UPDATE
+              - DELETE
+            resources:
+              - datastores
+        sideEffects: None
+      - admissionReviewVersions:
+          - v1
+        clientConfig:
+          service:
+            name: kamaji-webhook-service
+            namespace: kamaji-system
+            path: /validate-kamaji-clastix-io-v1alpha1-tenantcontrolplane
+        failurePolicy: Fail
+        name: vtenantcontrolplane.kb.io
+        rules:
+          - apiGroups:
+              - kamaji.clastix.io
+            apiVersions:
+              - v1alpha1
+            operations:
+              - CREATE
+              - UPDATE
+            resources:
+              - tenantcontrolplanes
+        sideEffects: None

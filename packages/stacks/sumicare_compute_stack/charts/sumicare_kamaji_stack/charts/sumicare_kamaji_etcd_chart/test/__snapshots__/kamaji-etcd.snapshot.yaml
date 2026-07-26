@@ -1,0 +1,637 @@
+- apiVersion: v1
+  data:
+    ca-csr.json: |-
+      {
+        "key": {
+          "algo": "rsa",
+          "size": 2048
+        },
+        "names": [
+          {
+            "C": "IT",
+            "L": "Rome",
+            "O": "Clastix",
+            "OU": "Kamaji",
+            "ST": "Italy"
+          }
+        ]
+      }
+    config.json: |-
+      {
+        "signing": {
+          "default": {
+            "expiry": "8760h"
+          },
+          "profiles": {
+            "server-authentication": {
+              "expiry": "8760h",
+              "usages": [
+                "signing",
+                "key encipherment",
+                "server auth"
+              ]
+            },
+            "client-authentication": {
+              "expiry": "8760h",
+              "usages": [
+                "signing",
+                "key encipherment",
+                "client auth"
+              ]
+            },
+            "peer-authentication": {
+              "expiry": "8760h",
+              "usages": [
+                "signing",
+                "key encipherment",
+                "server auth",
+                "client auth"
+              ]
+            }
+          }
+        }
+      }
+    peer-csr.json: |-
+      {
+        "key": {
+          "algo": "rsa",
+          "size": 2048
+        },
+        "hosts": [
+          "etcd-0.etcd.kamaji-system.svc.cluster.local",
+          "etcd-1.etcd.kamaji-system.svc.cluster.local",
+          "etcd-2.etcd.kamaji-system.svc.cluster.local",
+          "etcd-0.etcd",
+          "etcd-1.etcd",
+          "etcd-2.etcd"
+        ],
+        "names": [
+          {
+            "C": "IT",
+            "L": "Rome",
+            "O": "Clastix",
+            "OU": "Kamaji",
+            "ST": "Italy"
+          }
+        ]
+      }
+    root-client-csr.json: |-
+      {
+        "key": {
+          "algo": "rsa",
+          "size": 2048
+        },
+        "names": [
+          {
+            "C": "IT",
+            "L": "Rome",
+            "O": "Clastix",
+            "OU": "Kamaji root client",
+            "ST": "Italy"
+          }
+        ]
+      }
+    server-csr.json: |-
+      {
+        "key": {
+          "algo": "rsa",
+          "size": 2048
+        },
+        "hosts": [
+          "etcd-0.etcd.kamaji-system.svc.cluster.local",
+          "etcd-1.etcd.kamaji-system.svc.cluster.local",
+          "etcd-2.etcd.kamaji-system.svc.cluster.local",
+          "etcd-0.etcd",
+          "etcd-1.etcd",
+          "etcd-2.etcd"
+        ],
+        "names": [
+          {
+            "C": "IT",
+            "L": "Rome",
+            "O": "Clastix",
+            "OU": "Kamaji",
+            "ST": "Italy"
+          }
+        ]
+      }
+  immutable: false
+  kind: ConfigMap
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: etcd-csr
+    namespace: kamaji-system
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: etcd-certs
+    namespace: kamaji-system
+  spec:
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: etcd
+          app.kubernetes.io/instance: kamaji-etcd
+          app.kubernetes.io/managed-by: sumicare_rules
+          app.kubernetes.io/name: kamaji-etcd
+          app.kubernetes.io/part-of: kamaji-etcd
+          app.kubernetes.io/version: 3.7.1
+        name: etcd-certs
+      spec:
+        containers:
+          - args:
+              - if kubectl get secret etcd-certs --namespace=kamaji-system
+                &>/dev/null; then echo "Secret etcd-certs already exists"; else
+                echo "Creating secret etcd-certs"; kubectl
+                --namespace=kamaji-system create secret generic etcd-certs
+                --from-file=/certs/ca.crt --from-file=/certs/ca.key
+                --from-file=/certs/peer-key.pem --from-file=/certs/peer.pem
+                --from-file=/certs/server-key.pem --from-file=/certs/server.pem;
+                fi && if kubectl get secret root-client-certs
+                --namespace=kamaji-system &>/dev/null; then echo "Secret
+                root-client-certs already exists"; else echo "Creating secret
+                root-client-certs"; kubectl --namespace=kamaji-system create
+                secret tls root-client-certs --key=/certs/root-client-key.pem
+                --cert=/certs/root-client.pem; fi
+            command:
+              - /bin/sh
+              - -c
+            image: clastix/kubectl:v1.35
+            name: kubectl
+            volumeMounts:
+              - mountPath: /certs
+                name: certs
+        initContainers:
+          - args:
+              - cfssl gencert -initca /csr/ca-csr.json | cfssljson -bare
+                /certs/ca && mv /certs/ca.pem /certs/ca.crt && mv
+                /certs/ca-key.pem /certs/ca.key && cfssl gencert
+                -ca=/certs/ca.crt -ca-key=/certs/ca.key -config=/csr/config.json
+                -profile=peer-authentication /csr/peer-csr.json | cfssljson
+                -bare /certs/peer && cfssl gencert -ca=/certs/ca.crt
+                -ca-key=/certs/ca.key -config=/csr/config.json
+                -profile=peer-authentication /csr/server-csr.json | cfssljson
+                -bare /certs/server && cfssl gencert -ca=/certs/ca.crt
+                -ca-key=/certs/ca.key -config=/csr/config.json
+                -profile=client-authentication /csr/root-client-csr.json |
+                cfssljson -bare /certs/root-client
+            command:
+              - bash
+              - -c
+            image: cfssl/cfssl:latest
+            name: cfssl
+            volumeMounts:
+              - mountPath: /certs
+                name: certs
+              - mountPath: /csr
+                name: csr
+        restartPolicy: Never
+        securityContext:
+          fsGroup: 1000
+          runAsGroup: 1000
+          runAsUser: 1000
+        serviceAccountName: kamaji-etcd-etcd
+        volumes:
+          - configMap:
+              name: etcd-csr
+            name: csr
+          - emptyDir: {}
+            name: certs
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: etcd-setup
+    namespace: kamaji-system
+  spec:
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: etcd
+          app.kubernetes.io/instance: kamaji-etcd
+          app.kubernetes.io/managed-by: sumicare_rules
+          app.kubernetes.io/name: kamaji-etcd
+          app.kubernetes.io/part-of: kamaji-etcd
+          app.kubernetes.io/version: 3.7.1
+        name: etcd-setup
+      spec:
+        containers:
+          - args:
+              - |-
+                etcdctl member list -w table
+                if etcdctl user get root &>/dev/null; then
+                  echo "User already exists, nothing to do"
+                else
+                  etcdctl user add --no-password=true root &&
+                  etcdctl role add root &&
+                  etcdctl user grant-role root root &&
+                  etcdctl auth enable
+                fi
+            command:
+              - bash
+              - -c
+            env:
+              - name: ETCDCTL_ENDPOINTS
+                value: https://etcd-0.etcd.kamaji-system.svc.cluster.local:2379
+              - name: ETCDCTL_CACERT
+                value: /opt/certs/ca/ca.crt
+              - name: ETCDCTL_CERT
+                value: /opt/certs/root-certs/tls.crt
+              - name: ETCDCTL_KEY
+                value: /opt/certs/root-certs/tls.key
+            image: quay.io/coreos/etcd:v3.5.1
+            imagePullPolicy: Always
+            name: etcd-client
+            volumeMounts:
+              - mountPath: /opt/certs/root-certs
+                name: root-certs
+              - mountPath: /opt/certs/ca
+                name: certs
+        initContainers:
+          - command:
+              - sh
+              - -c
+              - kubectl --namespace=kamaji-system rollout status sts/etcd
+                --timeout=300s
+            image: clastix/kubectl:v1.35
+            name: kubectl
+        restartPolicy: Never
+        securityContext:
+          fsGroup: 1000
+          runAsGroup: 1000
+          runAsUser: 1000
+        serviceAccountName: kamaji-etcd-etcd
+        volumes:
+          - name: root-certs
+            secret:
+              secretName: root-client-certs
+          - name: certs
+            secret:
+              secretName: etcd-certs
+- apiVersion: batch/v1
+  kind: Job
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: etcd-teardown
+    namespace: kamaji-system
+  spec:
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: etcd
+          app.kubernetes.io/instance: kamaji-etcd
+          app.kubernetes.io/managed-by: sumicare_rules
+          app.kubernetes.io/name: kamaji-etcd
+          app.kubernetes.io/part-of: kamaji-etcd
+          app.kubernetes.io/version: 3.7.1
+        name: etcd-teardown
+      spec:
+        containers:
+          - command:
+              - kubectl
+              - --namespace=kamaji-system
+              - delete
+              - secret
+              - --ignore-not-found=true
+              - etcd-certs
+              - root-client-certs
+            image: clastix/kubectl:v1.35
+            name: kubectl
+        restartPolicy: Never
+        serviceAccountName: kamaji-etcd-etcd
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: Role
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: etcd-gen-certs-role
+    namespace: kamaji-system
+  rules:
+    - apiGroups:
+        - ""
+      resources:
+        - secrets
+      verbs:
+        - create
+    - apiGroups:
+        - apps
+      resources:
+        - statefulsets
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames:
+        - etcd-certs
+        - root-client-certs
+      resources:
+        - secrets
+      verbs:
+        - get
+        - delete
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: etcd-gen-certs-role
+    namespace: kamaji-system
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: etcd-gen-certs-role
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: kamaji-etcd-etcd
+      namespace: kamaji-system
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: etcd
+    namespace: kamaji-system
+  spec:
+    clusterIP: None
+    ports:
+      - name: client
+        port: 2379
+      - name: peer
+        port: 2380
+    selector:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/name: kamaji-etcd
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: kamaji-e-statefulset-etcd-statefulset-service-c88303b9
+    namespace: kamaji-system
+  spec:
+    clusterIP: None
+    externalIPs: []
+    ports:
+      - name: client
+        port: 2379
+        protocol: TCP
+        targetPort: 2379
+      - name: peer
+        port: 2380
+        protocol: TCP
+        targetPort: 2380
+    selector:
+      cdk8s.io/metadata.addr: kamaji-etcd-statefulset-etcd-statefulset-c896a146
+    type: ClusterIP
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: kamaji-etcd-etcd
+    namespace: kamaji-system
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    labels:
+      app.kubernetes.io/component: etcd
+      app.kubernetes.io/instance: kamaji-etcd
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: kamaji-etcd
+      app.kubernetes.io/part-of: kamaji-etcd
+      app.kubernetes.io/version: 3.7.1
+    name: etcd
+    namespace: kamaji-system
+  spec:
+    minReadySeconds: 0
+    podManagementPolicy: OrderedReady
+    replicas: 3
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: kamaji-etcd-statefulset-etcd-statefulset-c896a146
+    serviceName: etcd
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: etcd
+          app.kubernetes.io/instance: kamaji-etcd
+          app.kubernetes.io/name: kamaji-etcd
+          cdk8s.io/metadata.addr: kamaji-etcd-statefulset-etcd-statefulset-c896a146
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: kamaji-etcd-statefulset-etcd-statefulset-c896a146
+                  namespaces:
+                    - kamaji-system
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: kamaji-etcd-statefulset-etcd-statefulset-c896a146
+                  namespaces:
+                    - kamaji-system
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: false
+        containers:
+          - command:
+              - etcd
+              - --data-dir=/var/run/etcd
+              - --name=$(POD_NAME)
+              - --initial-cluster-state=new
+              - --initial-cluster=etcd-0=https://etcd-0.etcd.kamaji-system.svc.cluster.local:2380,etcd-1=https://etcd-1.etcd.kamaji-system.svc.cluster.local:2380,etcd-2=https://etcd-2.etcd.kamaji-system.svc.cluster.local:2380
+              - --initial-advertise-peer-urls=https://$(POD_NAME).etcd.$(POD_NAMESPACE).svc.cluster.local:2380
+              - --advertise-client-urls=https://$(POD_NAME).etcd.$(POD_NAMESPACE).svc.cluster.local:2379
+              - --initial-cluster-token=kamaji
+              - --listen-client-urls=https://0.0.0.0:2379
+              - --listen-metrics-urls=http://0.0.0.0:2381
+              - --listen-peer-urls=https://0.0.0.0:2380
+              - --client-cert-auth=true
+              - --peer-client-cert-auth=true
+              - --trusted-ca-file=/etc/etcd/pki/ca.crt
+              - --cert-file=/etc/etcd/pki/server.pem
+              - --key-file=/etc/etcd/pki/server-key.pem
+              - --peer-trusted-ca-file=/etc/etcd/pki/ca.crt
+              - --peer-cert-file=/etc/etcd/pki/peer.pem
+              - --peer-key-file=/etc/etcd/pki/peer-key.pem
+              - --auto-compaction-mode=periodic
+              - --auto-compaction-retention=5m
+              - --snapshot-count=10000
+              - --quota-backend-bytes=8589934592
+              - --v=8
+            env:
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+            image: quay.io/coreos/etcd
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 8
+              httpGet:
+                path: /health?serializable=true
+                port: 2381
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 15
+            name: etcd
+            ports:
+              - containerPort: 2379
+                name: client
+                protocol: TCP
+              - containerPort: 2380
+                name: peer
+                protocol: TCP
+            resources:
+              limits:
+                cpu: 400m
+                memory: 1024Mi
+              requests:
+                cpu: 200m
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            volumeMounts:
+              - mountPath: /var/run/etcd
+                name: data
+              - mountPath: /etc/etcd/pki
+                name: certs
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        restartPolicy: Always
+        securityContext:
+          fsGroup: 65534
+          fsGroupChangePolicy: Always
+          runAsGroup: 65534
+          runAsNonRoot: true
+          runAsUser: 65534
+          seccompProfile:
+            type: RuntimeDefault
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: etcd
+                app.kubernetes.io/instance: kamaji-etcd
+                app.kubernetes.io/name: kamaji-etcd
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: etcd
+                app.kubernetes.io/instance: kamaji-etcd
+                app.kubernetes.io/name: kamaji-etcd
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+        volumes:
+          - name: certs
+            secret:
+              secretName: etcd-certs
+    updateStrategy:
+      type: RollingUpdate
+    volumeClaimTemplates:
+      - metadata:
+          name: data
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests: {}

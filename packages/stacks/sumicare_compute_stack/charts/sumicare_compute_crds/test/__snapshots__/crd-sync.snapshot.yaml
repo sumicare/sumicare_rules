@@ -1,0 +1,30 @@
+crd-kamaji-datastores.yaml:
+  hash: 2bd01f3589df9f6be9c34aba954c439fabac72f7561a931b42d5c834ae6780ff
+  commitHash: 309d9889e8eefe40b4c6c6843ad9683959f02e5e
+crd-kamaji-kubeconfiggenerators.yaml:
+  hash: 6738cad3b8874078c49c049e3ec2ad02364a48ebfeb5d0ba5091e043f97e5400
+  commitHash: b40428825d4a181095d4205aeb2488207877fcde
+crd-kamaji-tenantcontrolplanes.yaml:
+  hash: b8ccaa2e12e7197ef608654e72091529963e079eb879a47dcf698e5bb9d3e826
+  commitHash: d45faced13f245e5017ae7ddee523882ff0d6255
+crd-keda-cloudeventsources.yaml:
+  hash: 54693ed66e4a602f09137bef80297b381bb51c1a55980e8d4844524c074bac1a
+  commitHash: 3a1ac487e4f0e383b07738ea5f6775ad31711488
+crd-keda-clustercloudeventsources.yaml:
+  hash: ac143e8ef6734d6d7665a6d094d7388d1816316d42b33b0a6e3ba0a7950322e0
+  commitHash: 3a1ac487e4f0e383b07738ea5f6775ad31711488
+crd-keda-clustertriggerauthentications.yaml:
+  hash: 177413d75f11b76ba7bf98aef200a1736245254197c7c1d8877fc7a0fc641df4
+  commitHash: 3a1ac487e4f0e383b07738ea5f6775ad31711488
+crd-keda-scaledjobs.yaml:
+  hash: 8805cd6c5b05161fb1541726e2c32c8e2990f435649fa74cbc616600b84b583a
+  commitHash: b4fc3fbd8ccba855a75ee32d7bd451fce6fdc79d
+crd-keda-scaledobjects.yaml:
+  hash: af35555862a83933b074af14ad439c4b4ceabaf4daa3e9338e9b23e36d308d80
+  commitHash: 3a1ac487e4f0e383b07738ea5f6775ad31711488
+crd-keda-triggerauthentications.yaml:
+  hash: 275307b4cb19ca8f0f506a879282aa4c67587ac16ec757f494d6585c5c185d65
+  commitHash: 3a1ac487e4f0e383b07738ea5f6775ad31711488
+crd-vpa.yaml:
+  hash: 2916e9b8e0699375ed8eca8af81e00c5a8cf9d68a70b4796e24d43794838d623
+  commitHash: 17b517acb9651c1db4a3df5d3ebc41eb0ff075a6

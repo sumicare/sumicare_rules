@@ -1,0 +1,28 @@
+provider:
+  kubernetes:
+    - alias: cdktn-cdk8s-cdk8s-provider
+resource:
+  kubernetes_manifest:
+    cdk8s-provider_cdk8s-provider-v1-ConfigMap-arn-config-default_5240A9F0:
+      manifest:
+        apiVersion: v1
+        data:
+          BUCKET_ARN: $${aws_s3_bucket.Bucket.arn}
+        kind: ConfigMap
+        metadata:
+          name: arn-config
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+    cdk8s-provider_cdk8s-provider-v1-ConfigMap-bucket-config-default_2BFC4EB5:
+      manifest:
+        apiVersion: v1
+        data:
+          BUCKET_NAME: $${aws_s3_bucket.Bucket.bucket}
+        kind: ConfigMap
+        metadata:
+          name: bucket-config
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+terraform:
+  required_providers:
+    kubernetes:
+      source: hashicorp/kubernetes
+      version: 3.2.1

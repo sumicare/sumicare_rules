@@ -1,0 +1,57 @@
+{
+	"name": "@sumicare/cdk8s-cdktn",
+	"version": "0.1.0",
+	"license": "MIT",
+	"private": false,
+	"type": "module",
+	"main": "./dist/index.cjs",
+	"module": "./dist/index.js",
+	"types": "./dist/src/CdkTnCdk8s.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/src/CdkTnCdk8s.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.cjs"
+		},
+		"./resolver": {
+			"types": "./dist/src/CdkTnResolver.d.ts",
+			"import": "./dist/resolver.js",
+			"require": "./dist/resolver.cjs"
+		},
+		"./package.json": "./package.json"
+	},
+	"files": [
+		"dist"
+	],
+	"scripts": {
+		"build": "rslib build",
+		"watch": "rslib build -w",
+		"clean": "run-p clean:*",
+		"clean:cache": "rm -rf node_modules/.cache",
+		"clean:dist": "rm -rf dist",
+		"clean:turbo": "rm -rf .turbo"
+	},
+	"peerDependencies": {
+		"cdk8s": "^2",
+		"cdktn": "^0.23",
+		"constructs": "^10"
+	},
+	"devDependencies": {
+		"@cdktn/provider-aws": "^24.11.0",
+		"@cdktn/provider-kubernetes": "^15.1.1",
+		"@rslib/core": "^0.23.2",
+		"@rstest/adapter-rslib": "^0.11.2",
+		"@rstest/core": "^0.11.2",
+		"@rstest/coverage-v8": "^0.11.2",
+		"@sumicare/chart-commons": "0.1.0",
+		"@sumicare/chart-commons-dev": "0.1.0",
+		"@types/node": "^26.1.1",
+		"cdk8s": "^2.70.84",
+		"cdktn": "^0.23.4",
+		"cdktn-cli": "^0.23.4",
+		"constructs": "^10.7.0",
+		"npm-run-all": "^4.1.5",
+		"typescript": "^7.0.2",
+		"yaml": "^2.9.0"
+	}
+}

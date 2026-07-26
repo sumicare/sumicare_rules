@@ -1,0 +1,25 @@
+language: typescript
+imports:
+  - servicemonitor:=crds/crd-servicemonitors.yaml
+  - podmonitor:=crds/crd-podmonitors.yaml
+  - probe:=crds/crd-probes.yaml
+  - prometheusrule:=crds/crd-prometheusrules.yaml
+  - alertmanagerconfig:=crds/crd-alertmanagerconfigs.yaml
+  - alertmanager:=crds/crd-alertmanagers.yaml
+  - prometheus:=crds/crd-prometheuses.yaml
+  - prometheusagent:=crds/crd-prometheusagents.yaml
+  - scrapeconfig:=crds/crd-scrapeconfigs.yaml
+  - thanosruler:=crds/crd-thanosrulers.yaml
+  - grafana:=crds/crd-grafana-grafanas.yaml
+  - grafanadashboard:=crds/crd-grafana-grafanadashboards.yaml
+  - grafanadatasource:=crds/crd-grafana-grafanadatasources.yaml
+  - grafanafolder:=crds/crd-grafana-grafanafolders.yaml
+  - grafanalibrarypanel:=crds/crd-grafana-grafanalibrarypanels.yaml
+  - grafanaserviceaccount:=crds/crd-grafana-grafanaserviceaccounts.yaml
+  - grafanaalertrulegroup:=crds/crd-grafana-grafanaalertrulegroups.yaml
+  - grafanacontactpoint:=crds/crd-grafana-grafanacontactpoints.yaml
+  - grafanamanifest:=crds/crd-grafana-grafanamanifests.yaml
+  - grafanamutetiming:=crds/crd-grafana-grafanamutetimings.yaml
+  - grafananotificationpolicy:=crds/crd-grafana-grafananotificationpolicies.yaml
+  - grafananotificationpolicyroute:=crds/crd-grafana-grafananotificationpolicyroutes.yaml
+  - grafananotificationtemplate:=crds/crd-grafana-grafananotificationtemplates.yaml

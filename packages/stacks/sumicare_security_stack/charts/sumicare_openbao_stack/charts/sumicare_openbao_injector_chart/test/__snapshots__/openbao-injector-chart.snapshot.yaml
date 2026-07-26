@@ -1,0 +1,273 @@
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 1.4.1
+    name: openbao-agent-injector
+    namespace: vault-system
+  spec:
+    minReadySeconds: 0
+    progressDeadlineSeconds: 600
+    replicas: 2
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: openbao-injector-chart-injector-deployment-deploy-c85b923f
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: injector
+          app.kubernetes.io/instance: openbao
+          app.kubernetes.io/name: openbao
+          cdk8s.io/metadata.addr: openbao-injector-chart-injector-deployment-deploy-c85b923f
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: openbao-injector-chart-injector-deployment-deploy-c85b923f
+                  namespaces:
+                    - vault-system
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: openbao-injector-chart-injector-deployment-deploy-c85b923f
+                  namespaces:
+                    - vault-system
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: false
+        containers:
+          - args:
+              - agent-inject
+              - 2>&1
+            env:
+              - name: AGENT_INJECT_LISTEN
+                value: :8080
+              - name: AGENT_INJECT_LOG_LEVEL
+                value: info
+              - name: AGENT_INJECT_LOG_FORMAT
+                value: standard
+              - name: AGENT_INJECT_VAULT_ADDR
+                value: https://openbao.vault-system.svc:8200
+              - name: AGENT_INJECT_VAULT_AUTH_PATH
+                value: auth/kubernetes
+              - name: AGENT_INJECT_VAULT_IMAGE
+                value: quay.io/openbao/openbao:v2.6.1
+              - name: AGENT_INJECT_TLS_AUTO
+                value: openbao-agent-injector-cfg
+              - name: AGENT_INJECT_TLS_AUTO_HOSTS
+                value: openbao-agent-injector-svc,openbao-agent-injector-svc.vault-system,openbao-agent-injector-svc.vault-system.svc
+              - name: AGENT_INJECT_REVOKE_ON_SHUTDOWN
+                value: "false"
+              - name: AGENT_INJECT_USE_LEADER_ELECTOR
+                value: "true"
+              - name: NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: AGENT_INJECT_CPU_REQUEST
+                value: 250m
+              - name: AGENT_INJECT_CPU_LIMIT
+                value: 500m
+              - name: AGENT_INJECT_MEM_REQUEST
+                value: 64Mi
+              - name: AGENT_INJECT_MEM_LIMIT
+                value: 128Mi
+              - name: AGENT_INJECT_DEFAULT_TEMPLATE
+                value: map
+              - name: AGENT_INJECT_TEMPLATE_CONFIG_EXIT_ON_RETRY_FAILURE
+                value: "true"
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+            image: openbao/openbao-k8s:v1.4.1
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /health/ready
+                port: 8080
+                scheme: HTTPS
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: sidecar-injector
+            readinessProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /health/ready
+                port: 8080
+                scheme: HTTPS
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 400m
+                memory: 1024Mi
+              requests:
+                cpu: 200m
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            startupProbe:
+              failureThreshold: 3
+              httpGet:
+                path: /health/ready
+                scheme: HTTPS
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        restartPolicy: Always
+        securityContext:
+          fsGroup: 1000
+          fsGroupChangePolicy: Always
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccountName: openbao-injector
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: injector
+                app.kubernetes.io/instance: openbao
+                app.kubernetes.io/name: openbao
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: injector
+                app.kubernetes.io/instance: openbao
+                app.kubernetes.io/name: openbao
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+- apiVersion: admissionregistration.k8s.io/v1
+  kind: MutatingWebhookConfiguration
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 1.4.1
+    name: openbao-agent-injector-cfg
+    namespace: vault-system
+  webhooks:
+    - admissionReviewVersions:
+        - v1
+      clientConfig:
+        caBundle: ""
+        service:
+          name: openbao-agent-injector-svc
+          namespace: vault-system
+          path: /mutate
+      failurePolicy: Ignore
+      matchPolicy: Exact
+      name: openbao.org
+      namespaceSelector: {}
+      objectSelector:
+        matchExpressions:
+          - key: app.kubernetes.io/name
+            operator: NotIn
+            values:
+              - openbao-agent-injector
+      rules:
+        - apiGroups:
+            - ""
+          apiVersions:
+            - v1
+          operations:
+            - CREATE
+            - UPDATE
+          resources:
+            - pods
+          scope: Namespaced
+      sideEffects: None
+      timeoutSeconds: 30
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 1.4.1
+    name: openbao-agent-injector-svc
+    namespace: vault-system
+  spec:
+    externalIPs: []
+    ports:
+      - name: https
+        port: 443
+        targetPort: 8080
+    selector:
+      app.kubernetes.io/component: injector
+      app.kubernetes.io/name: openbao
+    type: ClusterIP

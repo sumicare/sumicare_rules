@@ -1,0 +1,32 @@
+min_version = "2026.7.6"
+
+[env]
+PROJECT_NAME = "{{ config_root | basename }}"
+_.path = [
+  "{{config_root}}/node_modules/.bin",
+  "{{config_root}}/.venv/bin",
+]
+_.python.venv = { path = ".venv" }
+_.file = ".env"
+UV_PROJECT_ENVIRONMENT = "{{ config_root }}/.venv"
+JAVA_HOME = "{{ env.HOME }}/.local/share/mise/installs/java/temurin-25.0.3+9.0.LTS"
+
+[settings]
+
+[tools]
+node = { version = "26.5.0", postinstall = "mise exec -- npm install -g corepack && corepack enable && corepack prepare pnpm@11.17.0 --activate && pnpm install" }
+java = "temurin-25.0.3+9.0.LTS"
+
+python = "3.14.6"
+uv = { version = "0.11.29", postinstall = "mise exec -- uv sync --project packages/services/sumicare_agents" }
+
+"aqua:bazelbuild/bazelisk" = "1.29.0"
+"aqua:bazelbuild/buildtools/buildifier" = "8.5.1"
+"aqua:bazelbuild/buildtools/buildozer" = "8.2.1"
+"aqua:bazelbuild/bazel-watcher" = "0.31.0"
+
+"aqua:sigstore/cosign" = "3.0.4"
+"aqua:aquasecurity/trivy" = "0.69.3"
+"aqua:anchore/syft" = "1.49.0"
+"aqua:anchore/grype" = "0.116.0"
+"aqua:opentofu/opentofu" = "latest"

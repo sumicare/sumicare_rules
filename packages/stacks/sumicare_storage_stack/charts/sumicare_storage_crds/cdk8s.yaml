@@ -1,0 +1,23 @@
+language: typescript
+imports:
+  - rook:=crds/crd-rook-all.yaml
+  - cloudnativepg:=crds/crd-cloudnativepg-all.yaml
+  - garagenode:=crds/crd-garage-garagenodes.yaml
+  - topolvmlegacy:=crds/crd-topolvm-cybozu-logicalvolumes.yaml
+  - topolvm:=crds/crd-topolvm-io-logicalvolumes.yaml
+  - valkeycluster:=crds/crd-valkey-clusters.yaml
+  - valkeynode:=crds/crd-valkey-nodes.yaml
+  - backuprepository:=crds/crd-velero-backuprepositories.yaml
+  - backup:=crds/crd-velero-backups.yaml
+  - backupstoragelocation:=crds/crd-velero-backupstoragelocations.yaml
+  - datadownload:=crds/crd-velero-datadownloads.yaml
+  - dataupload:=crds/crd-velero-datauploads.yaml
+  - deletebackuprequest:=crds/crd-velero-deletebackuprequests.yaml
+  - downloadrequest:=crds/crd-velero-downloadrequests.yaml
+  - podvolumebackup:=crds/crd-velero-podvolumebackups.yaml
+  - podvolumerestore:=crds/crd-velero-podvolumerestores.yaml
+  - restore:=crds/crd-velero-restores.yaml
+  - schedule:=crds/crd-velero-schedules.yaml
+  - serverstatusrequest:=crds/crd-velero-serverstatusrequests.yaml
+  - volumesnapshotlocation:=crds/crd-velero-volumesnapshotlocations.yaml
+  - secretproviderclass:=crds/crd-secrets-store-csi-secretproviderclasses.yaml

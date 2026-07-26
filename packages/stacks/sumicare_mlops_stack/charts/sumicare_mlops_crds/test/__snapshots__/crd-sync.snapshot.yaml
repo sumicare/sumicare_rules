@@ -1,0 +1,105 @@
+crd-agentgateway-backends.yaml:
+  hash: a0722750537dd965a21f84298f95dc83b29f01fa1890016dc36fc039c9b42f23
+  commitHash: 2158a685567ce12b26718f1ff075527b87a603f2
+crd-agentgateway-models.yaml:
+  hash: 0af3e6feab6f87d2ce6b558e3b212694d9374d33b18b208624bc4dbce7a2f104
+  commitHash: 2158a685567ce12b26718f1ff075527b87a603f2
+crd-agentgateway-parameters.yaml:
+  hash: 1851ef732ab90f191ee3a758a5a6d6037190f94e8a82161251b055e25a40ffbf
+  commitHash: b6cb190851ca6d71d2d7dd4cfba879c398ff34cd
+crd-agentgateway-policies.yaml:
+  hash: fa159b1e796a29fd4304f64a504588ce9c9314d186ad28d1c8f28d2c682fb7a8
+  commitHash: 2158a685567ce12b26718f1ff075527b87a603f2
+crd-kagent-agentharnesses.yaml:
+  hash: 62189547ba13a431d09339a8f075f6cb7e891098887daaf66ed57e77b5cfdcea
+  commitHash: 9a470b90729a226dee674069028d40540e7e5635
+crd-kagent-agents.yaml:
+  hash: dce042611bb27d4266ff47aba9981a96d4c701e1199eed4d66a0262c8eae1adb
+  commitHash: 986a79bec318b1edc49bcda0d5c31107bfce2649
+crd-kagent-memories.yaml:
+  hash: 5082a1eb58ce481aa397c4fce8016309f538e60263b4395907c9f0566aa8ad62
+  commitHash: 8a94dfc5c1f094d225ef9b9ba6638073ec5c6ef1
+crd-kagent-modelconfigs.yaml:
+  hash: a573cb374571fc93a7d1c0ba2da28c8005d8c5f50b011326d1efc3dc0bcf42ed
+  commitHash: fad2d0c7ea113b640a0fe1e4e2775909f24651fd
+crd-kagent-modelproviderconfigs.yaml:
+  hash: e107887e8146789d4683c1e37c2d8d147b13453cea2ec5e36dfa9e6cc1bd4008
+  commitHash: 027db2ba4716c6953c11b9282a4d5f44d8182d2a
+crd-kagent-remotemcpservers.yaml:
+  hash: 0101c9b7481fe286b1f0193321113800988dc7c1f105599fff2486750a9d9926
+  commitHash: 9afbe4e7bef880bc80feb52edf136fbcc35a1f7e
+crd-kagent-sandboxagents.yaml:
+  hash: 69a712229b8f1548e198852d20a10a27833cb436c8aeb6ef81858153e95f1893
+  commitHash: 986a79bec318b1edc49bcda0d5c31107bfce2649
+crd-kagent-toolservers.yaml:
+  hash: ba322903030a019e0e8b2be4e6d9bb4af971df7e174e08134c64fd210a9f1241
+  commitHash: 8a94dfc5c1f094d225ef9b9ba6638073ec5c6ef1
+crd-kuberay-rayclusters.yaml:
+  hash: 84af0b910190ef0875581b7433f9e33bc86086a04c2039dd743f965f00fb364b
+  commitHash: ccab9232e3d01efd27df89a8f3ea291d5b080577
+crd-kuberay-rayjobs.yaml:
+  hash: 471d245cd3bfdf63c82be874d2b184c19b6522eec8e31f45692bb15ea8742290
+  commitHash: ccab9232e3d01efd27df89a8f3ea291d5b080577
+crd-kuberay-rayservices.yaml:
+  hash: 57d824665599f3ba338c897d714d46a552401c523d684f377a95faaf779e7daf
+  commitHash: ccab9232e3d01efd27df89a8f3ea291d5b080577
+crd-ome-acceleratorclasses.yaml:
+  hash: 982c79577cc55a9ec7927b901cf2eeab13be1910d0ce956fcd581606e83295e1
+  commitHash: b6ffa39822c0cbffad9fc55d2f84e751a79b3b6e
+crd-ome-basemodels.yaml:
+  hash: 3fc03b10b52a47989dd67f0a2b49a98b0c3212587ce4aac9186fd8af99c83a6c
+  commitHash: e8cc64fcfa5ab00cc6601e0c1ae8c84af65b7329
+crd-ome-benchmarkjobs.yaml:
+  hash: c41e2bce4b63a5f39be1828f5ed48fa30a73942e1e6cbf52c19c5278bdcc30b7
+  commitHash: f8d263f58a89955fed79694cb79ca43ad4e95155
+crd-ome-clusterbasemodels.yaml:
+  hash: a6cff48c193c63b69f3a43f906bf0090f6fc75c1f4d67c6ada7ef8d4d2a55717
+  commitHash: e8cc64fcfa5ab00cc6601e0c1ae8c84af65b7329
+crd-ome-clusterservingruntimes.yaml:
+  hash: 8ff83632073775f2200990c3bfcfcace5b5bbb5adc3c3624177f9fcd2fef0d5a
+  commitHash: c61981392651ba9b4b512567b0c756c1503aef75
+crd-ome-finetunedweights.yaml:
+  hash: 55f33df462d522f825443709624d628307d2a1112809ef77eb47728883aecbf1
+  commitHash: e8cc64fcfa5ab00cc6601e0c1ae8c84af65b7329
+crd-ome-inferenceservices.yaml:
+  hash: 411dfdd5fd49b289d494497fee179684b39b2def4c4e75f42e3a2e7febd22916
+  commitHash: c61981392651ba9b4b512567b0c756c1503aef75
+crd-ome-servingruntimes.yaml:
+  hash: e6c69a96a2f8bb4ab9d3ac35cd4da69071d43051e45245712e4143b3767d06d7
+  commitHash: c61981392651ba9b4b512567b0c756c1503aef75
+crd-vllm-loraadapter.yaml:
+  hash: ba99ee838678b357c1911b6f281c3b3d85b035b6d6085d440fc1dc4a0af95b54
+  commitHash: 5cb150e8fddbf67bb97312a1c31dd3ebbfeafe3b
+crd-volcano-colocationconfigurations.yaml:
+  hash: 9f74d5b95656d45ba87fba992c0d4b3ea5c768014a4f04719759c6487611410d
+  commitHash: 9e6b34b4f1c228eb5922b0a1e31c4c7cfc78a028
+crd-volcano-commands.yaml:
+  hash: b572eb89dd5f86fc4140fc39002eca1d49d91de2b0ccca74b810df76a0cad111
+  commitHash: 9e6b34b4f1c228eb5922b0a1e31c4c7cfc78a028
+crd-volcano-cronjobs.yaml:
+  hash: 1ec95696785727ac36ff686658e24081cf2d557868558db26abcf7d3038dc062
+  commitHash: fbba8abbe941000125409ed2d78022b55149aa45
+crd-volcano-hypernodes.yaml:
+  hash: 77ae7304543e37f218b428fc972dbd71bd6a88cc3004c4222172a63e2bd78fa4
+  commitHash: 9e6b34b4f1c228eb5922b0a1e31c4c7cfc78a028
+crd-volcano-jobflows.yaml:
+  hash: 5d1446a1b1a83a3b1c3b7eb83ebf8ded122e7e96052ee2f72b8e3980e33bbd69
+  commitHash: fbba8abbe941000125409ed2d78022b55149aa45
+crd-volcano-jobs.yaml:
+  hash: 49ba4a55cdce6d54e59c1c0fe9032074ce847bd9833996318af1e6529cfc95f0
+  commitHash: fbba8abbe941000125409ed2d78022b55149aa45
+crd-volcano-jobtemplates.yaml:
+  hash: c4e643645e1588fc923906b109853771f0841368111c568a2cb761d1ae1c1b52
+  commitHash: fbba8abbe941000125409ed2d78022b55149aa45
+crd-volcano-nodeshards.yaml:
+  hash: 019d2ee172394b2758a47079982a799916561bc8abfe291f6ba11a6b77343451
+  commitHash: 9e6b34b4f1c228eb5922b0a1e31c4c7cfc78a028
+crd-volcano-numatopologies.yaml:
+  hash: 58ce0ff1ee7538bab9835a05d8a8e5a7b5a21f1d1a60ffb415fd412de24decb9
+  commitHash: db91a2116fb398427756e586d0cc8b03479bdf5a
+crd-volcano-podgroups.yaml:
+  hash: c297c0fdcf00cea6a35daa2b6153a8590b56df0e22a96dbfa44f773814685017
+  commitHash: 9e6b34b4f1c228eb5922b0a1e31c4c7cfc78a028
+crd-volcano-queues.yaml:
+  hash: 92203dee889b6d3bb628f96d27779e98967d8ba21e58c425c7379bcbcee8b482
+  commitHash: 9e6b34b4f1c228eb5922b0a1e31c4c7cfc78a028

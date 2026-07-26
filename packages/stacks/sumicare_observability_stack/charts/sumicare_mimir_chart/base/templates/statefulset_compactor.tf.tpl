@@ -1,0 +1,131 @@
+/**
+   Copyright (c) 2026 Sumicare Contributors
+
+   Licensed under the terms of MIT License
+*/
+
+{{ GeneratedComment }}
+
+resource "kubernetes_stateful_set" "mimir_compactor" {
+  metadata {
+    name      = "${local.app_name}-compactor"
+    namespace = var.namespace
+    labels    = local.compactor_labels
+  }
+
+  spec {
+    replicas = var.compactor_replicas
+
+    selector {
+      match_labels = local.compactor_labels
+    }
+
+    template {
+      metadata {
+        namespace = var.namespace
+        labels    = local.compactor_labels
+
+        annotations = {
+          "checksum/config" = md5(kubernetes_config_map.mimir_config.data["mimir.yaml"])
+        }
+      }
+
+      spec {
+        volume {
+          name = "config"
+
+          config_map {
+            name = "${local.app_name}-config"
+
+            items {
+              key  = "mimir.yaml"
+              path = "mimir.yaml"
+            }
+          }
+        }
+
+        volume {
+          name = "runtime-config"
+
+          config_map {
+            name = "${local.app_name}-runtime"
+          }
+        }
+
+        {{ VolumeEmptyDir "active-queries" }}
+
+        container {
+          name  = "compactor"
+          image = "${var.image}:${var.mimir_version}"
+          args  = ["-target=compactor", "-config.expand-env=true", "-config.file=/etc/mimir/mimir.yaml"]
+
+          port {
+            name           = "http-metrics"
+            container_port = 8080
+            protocol       = "TCP"
+          }
+
+          port {
+            name           = "grpc"
+            container_port = 9095
+            protocol       = "TCP"
+          }
+
+          port {
+            name           = "memberlist"
+            container_port = 7946
+            protocol       = "TCP"
+          }
+
+          {{ ContainerResources }}
+
+          {{ VolumeMount "config" "/etc/mimir" }}
+
+          {{ VolumeMount "runtime-config" "/var/mimir" }}
+
+          {{ VolumeMount "storage" "/data" }}
+
+          {{ VolumeMount "active-queries" "/active-query-tracker" }}
+
+          {{ ReadinessProbe "/ready" "http-metrics" "HTTP" }}
+
+          {{ ImagePullPolicyIfNotPresent }}
+
+          {{ ContainerSecurityContext }}
+        }
+
+        termination_grace_period_seconds = 900
+        service_account_name             = local.app_name
+
+        {{ PodSecurityContextWithSeccomp }}
+
+        {{ TopologySpreadConstraint "local.compactor_labels" 1 "kubernetes.io/hostname" "ScheduleAnyway" }}
+      }
+    }
+
+    volume_claim_template {
+      metadata {
+        name = "storage"
+      }
+
+      spec {
+        access_modes = ["ReadWriteOnce"]
+
+        resources {
+          requests = {
+            storage = "2Gi"
+          }
+        }
+      }
+    }
+
+    service_name          = "${local.app_name}-compactor"
+    pod_management_policy = "OrderedReady"
+
+    update_strategy {
+      type = "RollingUpdate"
+    }
+  }
+
+  {{ LifecycleIgnoreVPAChanges }}
+}

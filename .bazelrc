@@ -1,0 +1,49 @@
+common --enable_runfiles
+
+common --enable_bzlmod
+
+common --lockfile_mode=update
+
+build --java_language_version=25
+build --java_runtime_version=remotejdk_25
+
+build --tool_java_language_version=25
+build --tool_java_runtime_version=remotejdk_25
+
+build --experimental_strict_java_deps=strict
+build --explicit_java_test_deps
+
+test --verbose_failures
+test --test_output=errors
+
+common --enable_platform_specific_config
+
+common:linux --cxxopt=-std=c++23
+common:linux --host_cxxopt=-std=c++23
+common:macos --cxxopt=-std=c++23
+common:macos --host_cxxopt=-std=c++23
+common:windows --cxxopt=/std:c++23
+common:windows --host_cxxopt=/std:c++23
+
+# Suppress warnings from external repos
+common:linux --per_file_copt=external/.*@-w
+common:linux --host_per_file_copt=external/.*@-w
+common:macos --per_file_copt=external/.*@-w
+common:macos --host_per_file_copt=external/.*@-w
+common:windows --per_file_copt=external/.*@/w
+common:windows --host_per_file_copt=external/.*@/w
+
+# Parallel jobs and remote caching
+build --jobs=auto
+build --color=yes
+build --terminal_columns=120
+
+build:windows --define=protobuf_allow_msvc=true
+
+# https://github.com/bazelbuild/bazel/issues/3236
+build:linux --sandbox_tmpfs_path=/tmp
+
+coverage --combined_report=lcov
+coverage --output_format=html
+
+try-import %workspace%/.bazelrc.user

@@ -1,0 +1,33 @@
+crd-tekton-customruns.yaml:
+  hash: 03524ea70ec325a65a8ff8aac160b405e96ff5d817a7ae039d487ee5d980afba
+  commitHash: 94c00fba1f38fe77615a45cd13f24a54f623cfb7
+crd-tekton-pipelineruns.yaml:
+  hash: 51d31aa66fd9c30b4c1e7ee080e1dbd9f6d10d718bcf2c6b78b1cef6ce115ee7
+  commitHash: 94c00fba1f38fe77615a45cd13f24a54f623cfb7
+crd-tekton-pipelines.yaml:
+  hash: 4824867e08fe49dcb80bf87c34a2634cbac7ca7c50fb745de1e300f262662c7e
+  commitHash: 94c00fba1f38fe77615a45cd13f24a54f623cfb7
+crd-tekton-resolutionrequests.yaml:
+  hash: b58b52478a0bc158e04ce580f651d38103dcbac1e9186ff5e4810a6747089aae
+  commitHash: 72cbb6387b118db0505ed851c47259fe9d9425d2
+crd-tekton-stepactions.yaml:
+  hash: f03091692ca251c2ff272ff050a8d1ce0d5c8875d2bb4b6e2ed135f0133ea077
+  commitHash: 94c00fba1f38fe77615a45cd13f24a54f623cfb7
+crd-tekton-taskruns.yaml:
+  hash: 10bb82aa49bcf37d04422e0f1d32f9a65877b57b0ea9daa6a0f24c5346042d41
+  commitHash: 94c00fba1f38fe77615a45cd13f24a54f623cfb7
+crd-tekton-tasks.yaml:
+  hash: bcd12aff81405df4cacb069fcb3ab553b23b5ab892e2c20f25a9537793ac343a
+  commitHash: 94c00fba1f38fe77615a45cd13f24a54f623cfb7
+crd-tekton-verificationpolicies.yaml:
+  hash: e24993d3cfc50dd0a5b554223251349b74b58d9fe8d94ed6fd2716a5f6eb804d
+  commitHash: 94c00fba1f38fe77615a45cd13f24a54f623cfb7
+crd-theia-appdefinitions.yaml:
+  hash: d3e8e95bbf8c8ca9db978a3c2f5b04979ba3d9ffe9e2708434ff05085595a054
+  commitHash: 81d7102183f617f8e163df371522342b795490cb
+crd-theia-sessions.yaml:
+  hash: fea6b635f24a67dbda361dd98a5742c051f98a57256cd8792bc7f94db4d10460
+  commitHash: 92d88b5389d0893fef6db936619cecde74fdcb3d
+crd-theia-workspaces.yaml:
+  hash: 2ff886c7077ccd7f86f2777c932e8b9ebcc767ecf7e57caa5ed22ca83fd2b6f6
+  commitHash: 92d88b5389d0893fef6db936619cecde74fdcb3d

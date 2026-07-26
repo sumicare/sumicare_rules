@@ -1,0 +1,69 @@
+crd-alertmanagerconfigs.yaml:
+  hash: 115c625fed0dbf7c82b42e36c7aa44b7a9b9187b8d1ef8c0df2f8c6f195f8b1e
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-alertmanagers.yaml:
+  hash: c1bc8a94458d3552efca29b62007adf180b9dd1fde8a3424baf7b9439e0f2610
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-grafana-grafanaalertrulegroups.yaml:
+  hash: 524215e8b000abb0ca387510875fb1461c28cd635cd71970d3eb6dab711133c7
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafanacontactpoints.yaml:
+  hash: 513b95016edeb3219d6e081f61b1c0cef4db5b49cda5d271717213ef2858d857
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafanadashboards.yaml:
+  hash: 02709237365d3919324bf8ae093968d59da6f95bbc23eef9ff117fe835f61bf1
+  commitHash: fcb6510ba679a8aa450ec4dd17a98abe7ecd98f1
+crd-grafana-grafanadatasources.yaml:
+  hash: ab01bd22549f57718d9175797792caf8195734860baba1794339fbc09661971b
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafanafolders.yaml:
+  hash: e5e725c73682490c54bbbd7973b7a6dab473d2f1769be85d61143c719dead14b
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafanalibrarypanels.yaml:
+  hash: 97ebc8416759e074f1adca8e7020fee94e4c53bdaa3a039fc28c9131b76bddec
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafanamanifests.yaml:
+  hash: 2e9b4d51f377a5833db5b3b31c52f08bda6c74b753d4ff60eb8e8a69f2322b52
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafanamutetimings.yaml:
+  hash: d156bf782830c9fe269bb4868996099d9fc9e05f20d49dc14710a106a735378f
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafananotificationpolicies.yaml:
+  hash: 7d00f499c8a71c00b77abbd441dea20cf40130eb3a3a244a7d99e7e8985e868c
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafananotificationpolicyroutes.yaml:
+  hash: 8e6f305b3331e9e587a4cfd3757e3d5aa56ab69044a18fba13e04375b2f4bdfb
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafananotificationtemplates.yaml:
+  hash: 5c21f6e8e55c91e936cb36ec3fc2b946c4c1c16ec78b3e8999caca98c99b702b
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-grafana-grafanas.yaml:
+  hash: d873d92297f1c3e8079530857660b662f0a5c030f41bf8f25a40bde96c7fa6a2
+  commitHash: e912768472b0840b418165eddd8b1a39392c46a3
+crd-grafana-grafanaserviceaccounts.yaml:
+  hash: 7a0e9ce0ead7af1c76e57d1d5bd3eeda30fb8698be3a3290090fd87baf95cb92
+  commitHash: 3323e40fef821b4912b8b546f5e21e72d9c5014e
+crd-podmonitors.yaml:
+  hash: 5b3e96497da594a29c83405997889056826250edb0e20240098c07394a6131cd
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-probes.yaml:
+  hash: 2380ccac59198c7cdd915e43c80952c3274518632e3d1f20a0cc4ed4d93514b3
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-prometheusagents.yaml:
+  hash: f37981e259b78dc18e3f75cd5d0d15b307e86e49a833114b6365c33971043f5e
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-prometheuses.yaml:
+  hash: 92183d7031deac488be341fa017f5717e4a28e99ac929afd400cd40f921337e4
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-prometheusrules.yaml:
+  hash: c463f9cc1290fd508b74b5c7de68f68747bedef9eed94ed29de941c5a15ee1b8
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-scrapeconfigs.yaml:
+  hash: b1781f6746adb7540decdf1586d7aec8a6aa7ab0f2dae0b0b3b78ceb9b5efc3b
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-servicemonitors.yaml:
+  hash: 03d9ef12475b6d592b40f688a0409f4e0d08c9ffe10a2b818ca3630e0fdf9b75
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e
+crd-thanosrulers.yaml:
+  hash: f32f624f308304a8225bd61303bf69ad371eca968c7403dccf32c2119a19e1a7
+  commitHash: b5a2d1879af927d3cf8aa72abaa28a6e7044ef8e

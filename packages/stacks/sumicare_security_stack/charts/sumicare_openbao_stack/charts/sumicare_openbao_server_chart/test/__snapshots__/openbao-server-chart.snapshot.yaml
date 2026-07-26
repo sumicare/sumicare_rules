@@ -1,0 +1,395 @@
+- apiVersion: v1
+  data:
+    openbao.json: |
+      # OpenBao server configuration
+      {
+        "listener": [
+          {
+            "tcp": {
+              "address": "0.0.0.0:8200",
+              "tls_disable": 1
+            }
+          }
+        ]
+      }
+      {
+        "storage": [
+          {
+            "raft": {
+              "path": "/openbao/data",
+              "node_id": "openbao-0"
+            }
+          }
+        ]
+      }
+  immutable: false
+  kind: ConfigMap
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 2.6.1
+    name: openbao-config
+    namespace: vault-system
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 2.6.1
+    name: openbao
+    namespace: vault-system
+  spec:
+    externalIPs: []
+    ports:
+      - name: api
+        port: 8200
+        targetPort: 8200
+      - name: cluster
+        port: 8201
+        targetPort: 8201
+    selector:
+      app.kubernetes.io/name: openbao
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 2.6.1
+      openbao-active: "true"
+    name: openbao-active
+    namespace: vault-system
+  spec:
+    externalIPs: []
+    ports:
+      - name: api
+        port: 8200
+        targetPort: 8200
+      - name: cluster
+        port: 8201
+        targetPort: 8201
+    selector:
+      app.kubernetes.io/name: openbao
+      openbao-active: "true"
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 2.6.1
+    name: openbao-internal
+    namespace: vault-system
+  spec:
+    clusterIP: None
+    externalIPs: []
+    ports:
+      - name: api
+        port: 8200
+        targetPort: 8200
+      - name: cluster
+        port: 8201
+        targetPort: 8201
+    selector:
+      app.kubernetes.io/name: openbao
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    name: openbao-server-server-statefulset-sts-service-c8402338
+    namespace: vault-system
+  spec:
+    clusterIP: None
+    externalIPs: []
+    ports:
+      - name: api
+        port: 8200
+        protocol: TCP
+        targetPort: 8200
+      - name: cluster
+        port: 8201
+        protocol: TCP
+        targetPort: 8201
+      - name: rep
+        port: 8202
+        protocol: TCP
+        targetPort: 8202
+    selector:
+      cdk8s.io/metadata.addr: openbao-server-chart-server-statefulset-sts-c89de25e
+    type: ClusterIP
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 2.6.1
+      openbao-active: "false"
+    name: openbao-standby
+    namespace: vault-system
+  spec:
+    externalIPs: []
+    ports:
+      - name: api
+        port: 8200
+        targetPort: 8200
+      - name: cluster
+        port: 8201
+        targetPort: 8201
+    selector:
+      app.kubernetes.io/name: openbao
+      openbao-active: "false"
+    type: ClusterIP
+- apiVersion: apps/v1
+  kind: StatefulSet
+  metadata:
+    labels:
+      app.kubernetes.io/component: server
+      app.kubernetes.io/instance: openbao
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: openbao
+      app.kubernetes.io/part-of: openbao
+      app.kubernetes.io/version: 2.6.1
+    name: openbao
+    namespace: vault-system
+  spec:
+    minReadySeconds: 0
+    podManagementPolicy: OrderedReady
+    replicas: 3
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: openbao-server-chart-server-statefulset-sts-c89de25e
+    serviceName: openbao-internal
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: server
+          app.kubernetes.io/instance: openbao
+          app.kubernetes.io/name: openbao
+          cdk8s.io/metadata.addr: openbao-server-chart-server-statefulset-sts-c89de25e
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: openbao-server-chart-server-statefulset-sts-c89de25e
+                  namespaces:
+                    - vault-system
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: openbao-server-chart-server-statefulset-sts-c89de25e
+                  namespaces:
+                    - vault-system
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: false
+        containers:
+          - args:
+              - bao server -config=/openbao/config/openbao.json
+            command:
+              - /bin/sh
+              - -ec
+            env:
+              - name: HOST_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.hostIP
+              - name: POD_IP
+                valueFrom:
+                  fieldRef:
+                    fieldPath: status.podIP
+              - name: BAO_ADDR
+                value: https://127.0.0.1:8200
+              - name: BAO_API_ADDR
+                value: https://$(POD_IP):8200
+              - name: BAO_K8S_POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: BAO_K8S_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+              - name: HOSTNAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: BAO_CLUSTER_ADDR
+                value: https://$(HOSTNAME).openbao-internal:8201
+              - name: BAO_RAFT_NODE_ID
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: BAO_LOG_LEVEL
+                value: info
+              - name: BAO_LOG_FORMAT
+                value: standard
+              - name: SKIP_CHOWN
+                value: "true"
+              - name: SKIP_SETCAP
+                value: "true"
+              - name: HOME
+                value: /home/openbao
+            image: quay.io/openbao/openbao:v2.6.1
+            imagePullPolicy: IfNotPresent
+            lifecycle:
+              preStop:
+                exec:
+                  command:
+                    - /bin/sh
+                    - -c
+                    - sleep 5 && kill -SIGTERM $(pidof bao)
+            livenessProbe:
+              failureThreshold: 5
+              httpGet:
+                path: /v1/sys/health
+                port: 8200
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            name: openbao
+            ports:
+              - containerPort: 8200
+                name: api
+                protocol: TCP
+              - containerPort: 8201
+                name: cluster
+                protocol: TCP
+              - containerPort: 8202
+                name: rep
+                protocol: TCP
+            readinessProbe:
+              failureThreshold: 5
+              httpGet:
+                path: /v1/sys/health?standbyok=true
+                port: 8200
+                scheme: HTTP
+              initialDelaySeconds: 10
+              periodSeconds: 10
+              successThreshold: 1
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 400m
+                memory: 1024Mi
+              requests:
+                cpu: 200m
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              seccompProfile:
+                type: RuntimeDefault
+            volumeMounts:
+              - mountPath: /home/openbao
+                name: home
+              - mountPath: /openbao/config
+                name: config
+                readOnly: true
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        restartPolicy: Always
+        securityContext:
+          fsGroup: 1000
+          fsGroupChangePolicy: Always
+          runAsGroup: 1000
+          runAsNonRoot: true
+          runAsUser: 100
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccountName: openbao-server
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: server
+                app.kubernetes.io/instance: openbao
+                app.kubernetes.io/name: openbao
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: server
+                app.kubernetes.io/instance: openbao
+                app.kubernetes.io/name: openbao
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+        volumes:
+          - emptyDir: {}
+            name: home
+          - configMap:
+              name: openbao-config
+            name: config
+    updateStrategy:
+      type: RollingUpdate
+    volumeClaimTemplates:
+      - metadata:
+          name: data
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests: {}

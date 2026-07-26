@@ -1,0 +1,12 @@
+{
+	"extends": "../../../tsconfig.json",
+	"include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.mts"],
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": ["node", "semver"],
+		"paths": {
+			"Commons/*": ["./src/*"],
+			"Commons/Test/*": ["./test/*"]
+		}
+	}
+}

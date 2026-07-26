@@ -1,0 +1,153 @@
+crd-cilium-bgpadvertisements.yaml:
+  hash: 44f04798cdfcfece42128630836086ee8c160ece8a4801dcb02eb03b1eadc5f7
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-bgpclusterconfigs.yaml:
+  hash: 51206558786549a8962fa7c6e178583409a655a480f9fc5e5c277fb48969908c
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-bgpnodeconfigoverrides.yaml:
+  hash: 8032d71df06d36600de9e6d7c6808e719537118feb5ffa528d692adbb4552238
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-bgpnodeconfigs.yaml:
+  hash: fcc8689b3e2985935e4badf23b545e5c4343e878e78c567fde28b035c56272b8
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-bgppeerconfigs.yaml:
+  hash: 91ab4563c9b4a6fd4314e9fe0b128fcd77f15b50f3a5be6a32a7703dede70f60
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-cidrgroups.yaml:
+  hash: 8060269a3ef63271578a090bbe5be135d0dad2932f7ccc7204b37820c990e535
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-clusterwideenvoyconfigs.yaml:
+  hash: 99fb35a331563f37031b9f8aabc42aee2e371eb28f98fa1b25af810417eff614
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-clusterwidenetworkpolicies.yaml:
+  hash: ae65e44fdee9da399cb7257a8464f197bea5270fdc213f6343700309c39abad6
+  commitHash: f59cf600aa70ac40de8d37197865bf08d57835e7
+crd-cilium-egressgatewaypolicies.yaml:
+  hash: c92dc81014168aff5d8d2f730c28c992f97ee85e5483f473555f1e5bc4a90298
+  commitHash: 8177e96d6f0d0815f4c941b508ae91333e89e97c
+crd-cilium-endpoints.yaml:
+  hash: fecfbb3886d3683e93b6adce98553db7c6f52cbc4442de253db488df0ad44a7e
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-envoyconfigs.yaml:
+  hash: 7fc86c57011374cc3447839eea290c6c4bbb5f1c9d613c4be76893f9cb51e484
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-identities.yaml:
+  hash: 6584bb0e5bd3cb41d6f1e1ff80b866407d21a44cba00d35b1c39abab0a2d0d57
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-loadbalancerippools.yaml:
+  hash: 31dd3d26d987e46bc04d66ec2f9bdcf2aa2b13b7b368e515ca324961b55d65b1
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-localredirectpolicies.yaml:
+  hash: e4673421422e46bb43e16d4e214c57fef6f07a3f95b0aaca92a4044a7e59ae91
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-networkpolicies.yaml:
+  hash: 62c6de8f358da125b94468d39187edb1cea157d79503fdc50ccec8a6aaa79a76
+  commitHash: f59cf600aa70ac40de8d37197865bf08d57835e7
+crd-cilium-nodeconfigs.yaml:
+  hash: c7e3558ed06e8d87ce75a007bd3b0f0fb2c28080a6c52ee9184f6d3b887f1aff
+  commitHash: 80e3a6e1fb53bea41856eabfe0b0676892452334
+crd-cilium-nodes.yaml:
+  hash: 4dcc629ab2039c39eec2a970c96e531f5d8d132384a32acd30c77ef8b2b4bb80
+  commitHash: dbd7ebc9785a43d72be83322278776a4e806bdad
+crd-external-dns-dnsendpoints.yaml:
+  hash: 96f4383d550a04d7c78b3312edc6e0f9dab9777d8195ff4cfdc76a0ca9587bbe
+  commitHash: 01f08ebf87191b93435fae6cfae27ad24b7620d8
+crd-gateway-api-backendtlspolicies.yaml:
+  hash: 4f2fce1026313f67edd04d794b2481204ada6a8258e7efe51878128cb930927c
+  commitHash: b6fb8e1548a25cbd1da8dec28a0ae87e1bd21f6f
+crd-gateway-api-gatewayclasses.yaml:
+  hash: aa9a6862499d6ab0b52a6833d4690c824216aab05fa4ddd09603df06f038f48b
+  commitHash: efb744260101b06ffa3cce7cbe41d48bc614de34
+crd-gateway-api-gateways.yaml:
+  hash: 161791d534b1ef582573cad99f9163eb8761715e6e934dd93374a5999ad17356
+  commitHash: c6da05ed4b7f6c2ac10a4b445d5e68264f3f937e
+crd-gateway-api-grpcroutes.yaml:
+  hash: 7c9663161de4131ececfe60a652dae3dacd373bc024f1ac2eb22c1ee8d34f657
+  commitHash: efb744260101b06ffa3cce7cbe41d48bc614de34
+crd-gateway-api-httproutes.yaml:
+  hash: 61b7c1e5b09e6f5ce12ed822b7f61e7642df740fd9a7a53944ac303db1bdf831
+  commitHash: efb744260101b06ffa3cce7cbe41d48bc614de34
+crd-gateway-api-listenersets.yaml:
+  hash: 82e58490759ce1da028ef86ec463f6217cbe5627a00e6216b5ee82babbfc8c10
+  commitHash: c6da05ed4b7f6c2ac10a4b445d5e68264f3f937e
+crd-gateway-api-referencegrants.yaml:
+  hash: 068bebe134b7f594e1a929bd7e32e722057548b47d485c5a3f3e55be34f0e4a0
+  commitHash: fc998d1a62a807d1af599b5af4be5d22c9a2046c
+crd-gateway-api-tcproutes.yaml:
+  hash: dcd9fe1ec226ce0fcac3b4844a6bfc41d571d878125e357df2f78a1911b76e73
+  commitHash: f5a88e95d5ecb026d1d5d71ce94907ce524db48e
+crd-gateway-api-tlsroutes.yaml:
+  hash: 11df9e5c7eaaca025c0714edd9d529cd2a19e8415f9ef86a35e153b4c70652f5
+  commitHash: a0b01b60006efa98293235f328606a7c509a8b6f
+crd-gateway-api-udproutes.yaml:
+  hash: 2e826cc345c148c7c7119a05dd6a28ab8b5ac0af4d0fac60333b6623fb6d9de1
+  commitHash: c65b5fdf73bedfff4df8e2944526e26eb51a3060
+crd-gateway-api-vap-safeupgrades.yaml:
+  hash: fdf38c9b29572b128df5902395baa7f4f0786b313e60e3739fcf1440066e4d60
+  commitHash: efb744260101b06ffa3cce7cbe41d48bc614de34
+crd-inference-ext-inferencepoolimports.yaml:
+  hash: 8feeddbbc5165e86513b6b2305eb8bd3b0c0abce0766b0a7a7a9f503c349071e
+  commitHash: 67ad1824914c7300c9f3d424d31dad2274490dbb
+crd-inference-ext-inferencepools.yaml:
+  hash: db48c012c3f8a476be1f09f9c9eb7f4a45391d423cf540214f1f0049ca10f4a9
+  commitHash: 80e21c3c7c602f6d73cb619a1a6348ce844de23d
+crd-istio-all.yaml:
+  hash: c98c49e3435f7ca04938cc710f929bbfe952472b177c3a7384b31e383c6b6c7a
+  commitHash: 2ac41fb9b29b9dc37dd5436a1a525fdd5d001764
+crd-kgateway-backendconfigpolicies.yaml:
+  hash: aa6a66b8d56e74e5dafbd931c00f69dde41e11f39a44f2141d6a148f3aa23e7f
+  commitHash: fc377e72a84eb95d6183a0843eef00c784afde70
+crd-kgateway-backends.yaml:
+  hash: 33c324cfe4dc46c53487dbb2266be504b7c76a2bdc741a04497585d6966cddbb
+  commitHash: 051b8315045111ad83b45720a3f374fff1f99377
+crd-kgateway-directresponses.yaml:
+  hash: 362d01741fddb1f33eac779cfba4ad214a61831db059b63955ae4b9f8c7e60fb
+  commitHash: 0f7828376612724c4d137d9dfb98d91d8faf1edc
+crd-kgateway-gatewayextensions.yaml:
+  hash: 0cfe318035afb38a65d4ad2334d7aeb90de7dc1137457455d4c63eb5b040e4ec
+  commitHash: 0adaa2d3cf444a2c36726cb54d78be4f39abef35
+crd-kgateway-gatewayparameters.yaml:
+  hash: 3f9f649dad92ae3ce85fecdfbc87a91513eadef3a8ef0792f923d5a5a77e218f
+  commitHash: f940d2a818aba416b0b1000214c28e074c731d63
+crd-kgateway-httplistenerpolicies.yaml:
+  hash: ef7ad1ac194e887951baa5cfabbf886de77daf0507e9a24fadd0c2e102ac999d
+  commitHash: 190bad9acb988518da1155a8e380265a0edcff64
+crd-kgateway-listenerpolicies.yaml:
+  hash: 64adc4b81045afe5691f60fca868d97a082f6c541c5f9ffc3703c64cca2d9fee
+  commitHash: 190bad9acb988518da1155a8e380265a0edcff64
+crd-kgateway-trafficpolicies.yaml:
+  hash: 5f3d3248c270896d5461d386a11b4b93c9091d37c7cf3fa56bd1d59910e01627
+  commitHash: c7b57e5b417ebbf83a3a2d95240385032072f30e
+crd-netbird-clusterproxies.yaml:
+  hash: 01a0961f5e48412fab441e8aeedf0afe9b3ac851059eeee39e16e573fad3a4ff
+  commitHash: 10f40da0e7f9dbff1ff2f680e8103c3dfeb412b0
+crd-netbird-nbgroups.yaml:
+  hash: cffe89b063ba884cf5c46c9a36cdfda43bd7ac219a84ef40005dc92b9e0579dd
+  commitHash: ae3489873580f9cdb61f6960e1fa5c6c1de53a6c
+crd-netbird-nbpolicies.yaml:
+  hash: e2161aff024f3d1e6eba343559ead7e737991ee7661d001d0c6218e3105f82db
+  commitHash: ae3489873580f9cdb61f6960e1fa5c6c1de53a6c
+crd-netbird-nbresources.yaml:
+  hash: d8bbadf773a69b965c6e0e7c0c04f7616280bbdae5269f8870cfee398872a7bf
+  commitHash: ae3489873580f9cdb61f6960e1fa5c6c1de53a6c
+crd-netbird-nbroutingpeers.yaml:
+  hash: c25d45b56d7cb787af78fbf9ac51d3cdafe330c0f2f96367c2e4257e66531308
+  commitHash: ae3489873580f9cdb61f6960e1fa5c6c1de53a6c
+crd-netbird-nbsetupkeys.yaml:
+  hash: cbd11b30a40dcb0a644464031430e1c64fa29d2b026f984cab3b3790a2bb3a4d
+  commitHash: ae3489873580f9cdb61f6960e1fa5c6c1de53a6c
+crd-netbird-networkegresses.yaml:
+  hash: 85fb65621e5eab16c932d8dbfef03eee3b1b179ef0f4704ff213d2a386825b72
+  commitHash: ea2dafd5a3e3585f0bad99603dd8766c4142dcc4
+crd-netbird-networkresources.yaml:
+  hash: d61240e2a2a2dfd010077bfafd2d1c9d086814c14ff2034b1d6cf5831354d0a5
+  commitHash: ae3489873580f9cdb61f6960e1fa5c6c1de53a6c
+crd-netbird-networkrouters.yaml:
+  hash: 39d73bc492dfc336360d9945201e5d20f4278e8e128062a7d9efcfa74cdf1239
+  commitHash: ae3489873580f9cdb61f6960e1fa5c6c1de53a6c
+crd-netbird-setupkeys.yaml:
+  hash: be98c11049dcfc17ec52776a87616544ceb494b6ccc5ca72d6804a9622ef42a1
+  commitHash: dcd9dfdb4e50cfa3f05a946eecc1a92fa63405bc
+crd-netbird-sidecarprofiles.yaml:
+  hash: 318cc8a1a6568bdf4783bda004d192739528fb34b002ee62869879958081b0c1
+  commitHash: 3bb745de19542069b5b4b1581a61bbc8783f306b

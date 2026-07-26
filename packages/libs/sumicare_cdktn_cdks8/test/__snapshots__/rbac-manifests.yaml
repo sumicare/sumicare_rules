@@ -1,0 +1,124 @@
+provider:
+  kubernetes:
+    - alias: cdktn-cdk8s-cdk8s-provider
+resource:
+  kubernetes_manifest:
+    cdk8s-provider_cdk8s-provider-rbacauthorizationk8sio--v1-ClusterRole-test-cluster-role-default_AE59DF1D:
+      manifest:
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRole
+        metadata:
+          labels:
+            app.kubernetes.io/instance: test-app
+            app.kubernetes.io/managed-by: sumicare_rules
+            app.kubernetes.io/name: test-app
+            app.kubernetes.io/part-of: test-app
+            app.kubernetes.io/version: 1.0.0
+          name: test-cluster-role
+        rules:
+          - apiGroups:
+              - ""
+            resourceNames: []
+            resources:
+              - pods
+            verbs:
+              - get
+              - list
+              - watch
+          - apiGroups:
+              - ""
+            resourceNames: []
+            resources:
+              - configmaps
+            verbs:
+              - create
+              - update
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+    cdk8s-provider_cdk8s-provider-rbacauthorizationk8sio--v1-ClusterRoleBinding-test-cluster-role-default_79F0ED8B:
+      manifest:
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRoleBinding
+        metadata:
+          labels:
+            app.kubernetes.io/instance: test-app
+            app.kubernetes.io/managed-by: sumicare_rules
+            app.kubernetes.io/name: test-app
+            app.kubernetes.io/part-of: test-app
+            app.kubernetes.io/version: 1.0.0
+          name: test-cluster-role
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: test-cluster-role
+        subjects:
+          - apiGroup: ""
+            kind: ServiceAccount
+            name: test-app-test
+            namespace: default
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+    cdk8s-provider_cdk8s-provider-rbacauthorizationk8sio--v1-Role-test-namespaced-role-default_0669FCDC:
+      manifest:
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: Role
+        metadata:
+          labels:
+            app.kubernetes.io/instance: test-app
+            app.kubernetes.io/managed-by: sumicare_rules
+            app.kubernetes.io/name: test-app
+            app.kubernetes.io/part-of: test-app
+            app.kubernetes.io/version: 1.0.0
+          name: test-namespaced-role
+          namespace: default
+        rules:
+          - apiGroups:
+              - ""
+            resources:
+              - secrets
+            verbs:
+              - get
+              - list
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+    cdk8s-provider_cdk8s-provider-rbacauthorizationk8sio--v1-RoleBinding-test-namespaced-role-default_E7B2BBD3:
+      manifest:
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: RoleBinding
+        metadata:
+          labels:
+            app.kubernetes.io/instance: test-app
+            app.kubernetes.io/managed-by: sumicare_rules
+            app.kubernetes.io/name: test-app
+            app.kubernetes.io/part-of: test-app
+            app.kubernetes.io/version: 1.0.0
+          name: test-namespaced-role
+          namespace: default
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: Role
+          name: test-namespaced-role
+        subjects:
+          - apiGroup: ""
+            kind: ServiceAccount
+            name: test-app-test
+            namespace: default
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+    cdk8s-provider_cdk8s-provider-v1-ServiceAccount-test-app-test-default_58E38AC2:
+      manifest:
+        apiVersion: v1
+        automountServiceAccountToken: false
+        kind: ServiceAccount
+        metadata:
+          labels:
+            app.kubernetes.io/component: test
+            app.kubernetes.io/instance: test-app
+            app.kubernetes.io/managed-by: sumicare_rules
+            app.kubernetes.io/name: test-app
+            app.kubernetes.io/part-of: test-app
+            app.kubernetes.io/version: 1.0.0
+          name: test-app-test
+          namespace: default
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+terraform:
+  required_providers:
+    kubernetes:
+      source: hashicorp/kubernetes
+      version: 3.2.1

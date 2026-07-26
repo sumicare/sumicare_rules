@@ -1,0 +1,327 @@
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRole
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: goldilocks
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: goldilocks
+      app.kubernetes.io/part-of: goldilocks
+      app.kubernetes.io/version: 4.15.1
+    name: goldilocks-controller
+  rules:
+    - apiGroups:
+        - apps
+      resourceNames: []
+      resources:
+        - "*"
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - batch
+      resourceNames: []
+      resources:
+        - cronjobs
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - batch
+      resourceNames: []
+      resources:
+        - jobs
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - namespaces
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - ""
+      resourceNames: []
+      resources:
+        - pods
+      verbs:
+        - get
+        - list
+        - watch
+    - apiGroups:
+        - autoscaling.k8s.io
+      resourceNames: []
+      resources:
+        - verticalpodautoscalers
+      verbs:
+        - get
+        - list
+        - create
+        - delete
+        - update
+    - apiGroups:
+        - argoproj.io
+      resourceNames: []
+      resources:
+        - rollouts
+      verbs:
+        - get
+        - list
+        - watch
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: ClusterRoleBinding
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: goldilocks
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: goldilocks
+      app.kubernetes.io/part-of: goldilocks
+      app.kubernetes.io/version: 4.15.1
+    name: goldilocks-controller
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: goldilocks-controller
+  subjects:
+    - apiGroup: ""
+      kind: ServiceAccount
+      name: goldilocks-controller
+      namespace: goldilocks
+- apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: goldilocks
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: goldilocks
+      app.kubernetes.io/part-of: goldilocks
+      app.kubernetes.io/version: 4.15.1
+    name: goldilocks-controller
+    namespace: goldilocks
+  spec:
+    minReadySeconds: 0
+    progressDeadlineSeconds: 600
+    replicas: 1
+    revisionHistoryLimit: 10
+    selector:
+      matchLabels:
+        cdk8s.io/metadata.addr: goldilocks-controller-deployment-controller-deployment-c8124498
+    strategy:
+      rollingUpdate:
+        maxSurge: 25%
+        maxUnavailable: 25%
+      type: RollingUpdate
+    template:
+      metadata:
+        labels:
+          app.kubernetes.io/component: controller
+          app.kubernetes.io/instance: goldilocks
+          app.kubernetes.io/name: goldilocks
+          cdk8s.io/metadata.addr: goldilocks-controller-deployment-controller-deployment-c8124498
+      spec:
+        affinity:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: eks.amazonaws.com/compute-type
+                      operator: NotIn
+                      values:
+                        - fargate
+                        - auto
+                    - key: cloud.google.com/compute-class
+                      operator: DoesNotExist
+                    - key: kubernetes.azure.com/cluster-autoscaler-mode
+                      operator: NotIn
+                      values:
+                        - automatic
+                    - key: cloud.google.com/gke-spot
+                      operator: NotIn
+                      values:
+                        - "true"
+                    - key: kubernetes.azure.com/scalesetpriority
+                      operator: NotIn
+                      values:
+                        - spot
+                    - key: lifecycle
+                      operator: NotIn
+                      values:
+                        - Spot
+                        - spot
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: goldilocks-controller-deployment-controller-deployment-c8124498
+                  namespaces:
+                    - goldilocks
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+              - podAffinityTerm:
+                  labelSelector:
+                    matchLabels:
+                      cdk8s.io/metadata.addr: goldilocks-controller-deployment-controller-deployment-c8124498
+                  namespaces:
+                    - goldilocks
+                  topologyKey: topology.kubernetes.io/zone
+                weight: 50
+        automountServiceAccountToken: true
+        containers:
+          - command:
+              - /goldilocks
+              - controller
+              - -v2
+            image: us-docker.pkg.dev/fairwinds-ops/oss/goldilocks:v4.15.1
+            imagePullPolicy: Always
+            name: goldilocks
+            ports:
+              - containerPort: 8080
+                name: metrics
+                protocol: TCP
+            resources:
+              limits:
+                cpu: 400m
+                memory: 1024Mi
+              requests:
+                cpu: 200m
+                memory: 512Mi
+            securityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - ALL
+              privileged: false
+              readOnlyRootFilesystem: true
+              runAsNonRoot: true
+              runAsUser: 10324
+              seccompProfile:
+                type: RuntimeDefault
+        dnsPolicy: ClusterFirst
+        hostNetwork: false
+        restartPolicy: Always
+        securityContext:
+          fsGroupChangePolicy: Always
+          runAsNonRoot: true
+          seccompProfile:
+            type: RuntimeDefault
+        serviceAccountName: goldilocks-controller
+        setHostnameAsFQDN: false
+        shareProcessNamespace: false
+        terminationGracePeriodSeconds: 30
+        topologySpreadConstraints:
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: controller
+                app.kubernetes.io/instance: goldilocks
+                app.kubernetes.io/name: goldilocks
+            maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: ScheduleAnyway
+          - labelSelector:
+              matchLabels:
+                app.kubernetes.io/component: controller
+                app.kubernetes.io/instance: goldilocks
+                app.kubernetes.io/name: goldilocks
+            maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: DoNotSchedule
+- apiVersion: v1
+  kind: Service
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: goldilocks
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: goldilocks
+      app.kubernetes.io/part-of: goldilocks
+      app.kubernetes.io/version: 4.15.1
+    name: goldilocks-controller-metrics
+    namespace: goldilocks
+  spec:
+    externalIPs: []
+    ipFamilies:
+      - IPv4
+      - IPv6
+    ipFamilyPolicy: PreferDualStack
+    ports:
+      - name: metrics
+        port: 8080
+        protocol: TCP
+        targetPort: 8080
+    selector:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: goldilocks
+      app.kubernetes.io/name: goldilocks
+    type: ClusterIP
+- apiVersion: v1
+  automountServiceAccountToken: false
+  kind: ServiceAccount
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: goldilocks
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: goldilocks
+      app.kubernetes.io/part-of: goldilocks
+      app.kubernetes.io/version: 4.15.1
+    name: goldilocks-controller
+    namespace: goldilocks
+- apiVersion: monitoring.coreos.com/v1
+  kind: ServiceMonitor
+  metadata:
+    labels:
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/instance: goldilocks
+      app.kubernetes.io/managed-by: sumicare_rules
+      app.kubernetes.io/name: goldilocks
+      app.kubernetes.io/part-of: goldilocks
+      app.kubernetes.io/version: 4.15.1
+    name: goldilocks-controller
+    namespace: goldilocks
+  spec:
+    endpoints:
+      - honorLabels: true
+        interval: 30s
+        metricRelabelings:
+          - action: keep
+            regex: goldilocks_(build_info|controller_)
+            sourceLabels:
+              - __name__
+        port: metrics
+        relabelings:
+          - action: replace
+            regex: ^(.*)$
+            replacement: $1
+            separator: ;
+            sourceLabels:
+              - __meta_kubernetes_pod_node_name
+            targetLabel: nodename
+          - action: replace
+            replacement: goldilocks
+            targetLabel: otel_service_name
+          - action: replace
+            replacement: goldilocks
+            targetLabel: otel_service_namespace
+        scheme: http
+    jobLabel: jobLabel
+    namespaceSelector:
+      matchNames:
+        - goldilocks
+    selector:
+      matchLabels:
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/instance: goldilocks
+        app.kubernetes.io/name: goldilocks
+    targetLabels:
+      - otel.service.name/goldilocks
+      - otel.service.namespace/goldilocks

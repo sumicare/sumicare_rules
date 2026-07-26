@@ -1,0 +1,17 @@
+language: typescript
+imports:
+  - kafka:=crds/crd-strimzi-kafka.yaml
+  - kafkaconnect:=crds/crd-strimzi-kafkaconnect.yaml
+  - strimzipodset:=crds/crd-strimzi-strimzipodset.yaml
+  - kafkatopic:=crds/crd-strimzi-kafkatopic.yaml
+  - kafkauser:=crds/crd-strimzi-kafkauser.yaml
+  - kafkanodepool:=crds/crd-strimzi-kafkanodepool.yaml
+  - kafkabridge:=crds/crd-strimzi-kafkabridge.yaml
+  - kafkaconnector:=crds/crd-strimzi-kafkaconnector.yaml
+  - kafkamirrormaker2:=crds/crd-strimzi-kafkamirrormaker2.yaml
+  - kafkarebalance:=crds/crd-strimzi-kafkarebalance.yaml
+  - natscluster:=crds/crd-nats.yaml
+  - flinkdeployment:=crds/crd-flink-deployments.yaml
+  - flinksessionjob:=crds/crd-flink-sessionjobs.yaml
+  - flinkbluegreendeployment:=crds/crd-flink-bluegreendeployments.yaml
+  - flinkstatesnapshot:=crds/crd-flink-statesnapshots.yaml

@@ -1,0 +1,19 @@
+language: typescript
+imports:
+  - application:=crds/crd-argocd-application.yaml
+  - applicationset:=crds/crd-argocd-applicationset.yaml
+  - appproject:=crds/crd-argocd-appproject.yaml
+  - eventbus:=crds/crd-argoevents-eventbus.yaml
+  - eventsource:=crds/crd-argoevents-eventsources.yaml
+  - sensor:=crds/crd-argoevents-sensors.yaml
+  - analysisrun:=crds/crd-argorollouts-analysisrun.yaml
+  - analysistemplate:=crds/crd-argorollouts-analysistemplate.yaml
+  - clusteranalysistemplate:=crds/crd-argorollouts-clusteranalysistemplate.yaml
+  - experiment:=crds/crd-argorollouts-experiment.yaml
+  - rollout:=crds/crd-argorollouts-rollout.yaml
+  - clusterworkflowtemplate:=crds/crd-argoworkflows-clusterworkflowtemplates.yaml
+  - cronworkflow:=crds/crd-argoworkflows-cronworkflows.yaml
+  - workfloweventbinding:=crds/crd-argoworkflows-workfloweventbindings.yaml
+  - workflow:=crds/crd-argoworkflows-workflows.yaml
+  - workflowtaskresult:=crds/crd-argoworkflows-workflowtaskresults.yaml
+  - workflowtemplate:=crds/crd-argoworkflows-workflowtemplates.yaml

@@ -1,0 +1,10 @@
+"""Repository-level configuration for sumicare_rules."""
+
+ignore_directories([
+    "**/node_modules",
+    "**/dist",
+    "**/build",
+    "**/.nitro",
+    "**/.output",
+    "**/storybook-static",
+])

@@ -1,0 +1,12 @@
+language: typescript
+imports:
+  - verticalpodautoscaler:=crds/crd-vpa.yaml
+  - scaledobject:=crds/crd-keda-scaledobjects.yaml
+  - scaledjob:=crds/crd-keda-scaledjobs.yaml
+  - triggerauthentication:=crds/crd-keda-triggerauthentications.yaml
+  - clustertriggerauthentication:=crds/crd-keda-clustertriggerauthentications.yaml
+  - cloudeventsource:=crds/crd-keda-cloudeventsources.yaml
+  - clustercloudeventsource:=crds/crd-keda-clustercloudeventsources.yaml
+  - datastore:=crds/crd-kamaji-datastores.yaml
+  - kubeconfiggenerator:=crds/crd-kamaji-kubeconfiggenerators.yaml
+  - tenantcontrolplane:=crds/crd-kamaji-tenantcontrolplanes.yaml

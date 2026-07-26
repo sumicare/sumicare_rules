@@ -1,0 +1,30 @@
+provider:
+  kubernetes:
+    - alias: cdktn-cdk8s-cdk8s-provider
+resource:
+  kubernetes_manifest:
+    cdk8s-provider_cdk8s-provider-batch--v1-Job-chart-job-c858f5c0-default_CBB3BF79:
+      manifest:
+        apiVersion: batch/v1
+        kind: Job
+        metadata:
+          generateName: auto-job-
+          name: chart-job-c858f5c0
+        spec:
+          template:
+            spec:
+              containers:
+                - command:
+                    - perl
+                    - -Mbignum=bpi
+                    - -wle
+                    - print bpi(2000)
+                  image: perl:5.34.0
+                  name: pi
+              restartPolicy: Never
+      provider: kubernetes.cdktn-cdk8s-cdk8s-provider
+terraform:
+  required_providers:
+    kubernetes:
+      source: hashicorp/kubernetes
+      version: 3.2.1

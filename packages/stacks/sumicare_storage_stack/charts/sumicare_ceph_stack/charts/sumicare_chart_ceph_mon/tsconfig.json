@@ -1,0 +1,12 @@
+{
+	"extends": "../../../../../../../tsconfig.json",
+	"include": ["src/**/*.ts", "test/**/*.ts"],
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": ["node"],
+		"paths": {
+			"Storage/Ceph/Mon/*": ["./src/*"],
+			"Storage/Ceph/Mon/Test/*": ["./test/*"]
+		}
+	}
+}

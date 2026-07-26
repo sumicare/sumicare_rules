@@ -1,0 +1,12 @@
+{
+	"extends": "../../../../../../../tsconfig.json",
+	"include": ["src/**/*.ts", "test/**/*.ts", "scripts/**/*.mts"],
+	"compilerOptions": {
+		"rootDir": ".",
+		"types": ["node"],
+		"paths": {
+			"Kamaji/Controller/*": ["./src/*"],
+			"Kamaji/Controller/Test/*": ["./test/*"]
+		}
+	}
+}
